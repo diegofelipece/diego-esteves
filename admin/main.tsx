@@ -20,18 +20,27 @@ async function initialize() {
     status.textContent = 'GitHub login is not configured yet. Set the CMS_OAUTH_URL Actions variable after provisioning the OAuth service, then rebuild. For local editing, use npm run cms:local and npm run cms:start.';
     return;
   }
-  CMS.registerPreviewStyle([previewStyles, blockStyles, imageStyles].join('\n'), { raw: true });
+  const siteBase = import.meta.env.BASE_URL.replace(/\/admin\/$/, '');
+  CMS.registerPreviewStyle([previewStyles, blockStyles, imageStyles].join('\n').replaceAll('/fonts/', `${siteBase}/fonts/`), { raw: true });
   const preview = ({ entry, getAsset }: PreviewTemplateComponentProps) => {
     const data = entry.get('data').toJS() as Record<string, unknown>;
     const blocks = (data.blocks || []) as ContentBlock[];
+    const resolveImage = (path: string) => {
+      const asset = getAsset(path)?.toString() || path;
+      return asset.startsWith('/images/') ? `${siteBase}${asset}` : asset;
+    };
+    const about = data.about as { heading?: string; text?: string; image?: string; imageAlt?: string; buttonLabel?: string } | undefined;
     return (
       <article style={{ background: 'white', padding: '2rem', maxWidth: 980, margin: 'auto' }}>
         <h1>{String(data.title || 'Preview')}</h1>
-        <ContentBlocks blocks={blocks} resolveImage={(path) => {
-          const asset = getAsset(path)?.toString() || path;
-          return asset.startsWith('/images/') ? `${import.meta.env.BASE_URL.replace(/\/admin\/$/, '')}${asset}` : asset;
-        }} />
-        {data.about ? <p>{interpolateContent(String((data.about as { text?: string }).text || ''))}</p> : null}
+        {data.tagline ? <p>{String(data.tagline)}</p> : null}
+        <ContentBlocks blocks={blocks} resolveImage={resolveImage} />
+        {about ? <>
+          <h2>{about.heading}</h2>
+          {about.image ? <img src={resolveImage(about.image)} alt={about.imageAlt || ''} style={{ maxWidth: '100%' }} /> : null}
+          <p>{interpolateContent(about.text || '')}</p>
+          <p>{about.buttonLabel}</p>
+        </> : null}
       </article>
     );
   };

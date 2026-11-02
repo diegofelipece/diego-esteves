@@ -54,7 +54,7 @@ export function cmsConfig({ basePath = '', repository = 'diegofelipece/diego-est
     publish_mode: 'editorial_workflow',
     media_folder: 'public/images/uploads',
     public_folder: '/images/uploads',
-    site_url: `https://diegoesteves.ink${basePath}`,
+    site_url: 'https://diegoesteves.ink',
     display_url: `${basePath}/`,
     show_preview_links: false,
     slug: { encoding: 'ascii', clean_accents: true },

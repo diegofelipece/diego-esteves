@@ -3,6 +3,12 @@ import { expect, test } from '@playwright/test';
 test('admin is static, base-aware, and reports missing OAuth without contacting a login provider', async ({ page }) => {
   const errors: string[] = [];
   const authRequests: string[] = [];
+  await page.route('**/admin/config.yml', async (route) => {
+    const response = await route.fetch();
+    const config = await response.json();
+    delete config.backend.base_url;
+    await route.fulfill({ json: config });
+  });
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('request', (request) => {
     if (/github\.com\/login|api\.netlify\.com\/auth/.test(request.url())) authRequests.push(request.url());

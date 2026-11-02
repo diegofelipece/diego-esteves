@@ -19,6 +19,7 @@ export default function ContentBlocks({ blocks, resolveImage }: {
       <Markdown
         skipHtml
         components={{
+          p: ({ children }) => block.type === 'heading' ? <>{children}</> : <p>{children}</p>,
           a: ({ children, href }) => <a href={href} target="_blank" rel="noreferrer">{children}</a>,
           em: ({ children }) => <i>{children}</i>,
           img: () => null,
@@ -27,6 +28,6 @@ export default function ContentBlocks({ blocks, resolveImage }: {
     );
     if (block.type === 'text') return <GenericBlock key={index}>{markdown}</GenericBlock>;
     const Heading = `h${block.level || 3}` as 'h2' | 'h3' | 'h4';
-    return <Heading key={index}><Markdown skipHtml components={{ p: ({ children }) => <>{children}</>, em: ({ children }) => <i>{children}</i> }}>{block.text || ''}</Markdown></Heading>;
+    return <Heading key={index}>{markdown}</Heading>;
   });
 }

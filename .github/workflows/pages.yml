@@ -49,6 +49,12 @@ jobs:
       - name: Lint and type-check
         run: npm run lint && npm run typecheck
 
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify local CMS editing, uploads, and generated routes
+        run: npm run test:cms
+
       - name: Build static site
         run: npm run build
         env:
@@ -56,9 +62,6 @@ jobs:
 
       - name: Validate static output
         run: npm test
-
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
 
       - name: Verify portfolio interactions
         run: npm run test:e2e

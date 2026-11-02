@@ -14,7 +14,8 @@
     "lint": "eslint .",
     "typecheck": "react-router typegen && tsc",
     "test": "node --experimental-strip-types --test tests/*.test.mjs tests/*.test.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:cms": "playwright test --config playwright.cms.config.ts"
   },
   "dependencies": {
     "framer-motion": "14.9.0",
