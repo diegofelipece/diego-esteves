@@ -15,15 +15,23 @@ export default defineConfig(({ command, mode }) => {
   return {
     root: fileURLToPath(new URL('./', import.meta.url)),
     base: `${basePath}/admin/`,
-    publicDir: false,
+    publicDir: command === 'serve' ? fileURLToPath(new URL('../public/', import.meta.url)) : false,
     define: { __CMS_LOCAL__: command === 'serve' },
     plugins: [{
       name: 'cms-configuration',
       configureServer(server) {
         server.middlewares.use((request, response, next) => {
-          if (request.url?.split('?')[0] !== `${basePath}/admin/config.yml`) return next();
-          response.setHeader('content-type', 'text/yaml');
-          response.end(JSON.stringify(config));
+          if (request.url?.split('?')[0] === `${basePath}/admin/config.yml`) {
+            response.setHeader('content-type', 'text/yaml');
+            response.end(JSON.stringify(config));
+            return;
+          }
+          // Existing media keeps site-root URLs, outside the local editor's base.
+          const assetPath = request.url?.startsWith(`${basePath}/`) ? request.url.slice(basePath.length) : request.url;
+          if (assetPath?.startsWith('/images/') || assetPath?.startsWith('/fonts/')) {
+            request.url = `${basePath}/admin${assetPath}`;
+          }
+          next();
         });
       },
       generateBundle() {

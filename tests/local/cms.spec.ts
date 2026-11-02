@@ -15,6 +15,10 @@ test('local editor saves a project and image that become a new static route with
   try {
     await page.goto('./');
     await page.getByRole('button', { name: 'Login', exact: true }).click();
+    await page.getByText('1 - Mussum Ipsum', { exact: true }).click();
+    await expect.poll(() => page.frameLocator('iframe').locator('img').first()
+      .evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+    await page.goto('./#/collections/projects');
     await page.getByText('＋ Project', { exact: true }).click();
     await page.getByLabel('URL slug', { exact: true }).fill(slug);
     await page.getByLabel('Title', { exact: true }).fill('CMS validation fixture');
