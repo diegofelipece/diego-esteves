@@ -7,6 +7,9 @@
 - Use semantic commits (for example, `feat: add project preview` or `fix: correct asset paths`).
 - Name work branches `feature/<name>`, `fix/<name>`, or `chore/<name>`.
 - Use GitHub Flow: branch from `master`, open a pull request back to `master`, and do not use a `develop` branch.
+- Never merge a pull request without the user's explicit approval for that specific PR and its current changes. Plan approval, passing checks, and permission to implement or commit are not merge approval.
+- Never enable auto-merge, merge queues, or unattended publishing to bypass that approval. Leave the PR open for review.
+- Never create or push release tags, publish GitHub Releases, or trigger a release without the user's separate explicit approval for that version. Approval to merge is not approval to release.
 - This is a React portfolio built with Vite and React Router Framework Mode. It is pre-rendered with `ssr: false`; never add a public-site runtime server or rely on SPA rewrites.
 - Use Node.js 22.22 or newer. Run `npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, and `npm run test:e2e` when changing the site.
 - `npm run build` exports static files to `out/`, including the root `404.html` and `.nojekyll` required for GitHub Pages; Pages serves files without Apache rewrite rules.

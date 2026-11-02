@@ -65,12 +65,61 @@ preview path. The old `NEXT_PUBLIC_BASE_PATH` setting is no longer used.
 
 Use a work branch from `master`, a pull request back to `master`, and semantic
 commits. A merge triggers validation and Pages deployment; a tag alone does not
-deploy. Verify the deployed routes and interactions before recording the release.
+deploy.
+
+### Required user approval
+
+Never merge a pull request without the user's explicit approval for that specific
+PR and its current changes. Permission to plan, implement, commit, push a work
+branch, or open a PR is not permission to merge. Passing CI is not approval.
+Leave the PR open until approval is given; do not enable auto-merge, enqueue a
+merge, or bypass this gate through a direct push to `master`.
+
+Never automatically release. Creating or pushing a release tag, publishing a
+GitHub Release, or triggering a release requires separate explicit user approval
+for the version being released. Merge approval does not grant release approval.
+Verify the deployed routes and interactions before requesting release approval.
 Continue the existing unprefixed semantic-version tag convention (for example,
 `1.7.0`) and keep the package version aligned.
 
+The existing Pages deployment after an approved merge remains automatic; this is
+distinct from creating a version tag or publishing a GitHub Release.
+
 Roll back using a revert pull request followed by the normal Pages deployment.
-No DNS change is needed for an application rollback.
+The same approval gate applies to merging a rollback PR. No DNS change is needed
+for an application rollback.
+
+### GitHub enforcement
+
+GitHub branch protection or an active branch ruleset can require PRs, approving
+reviews, resolved conversations, and both `build (root)` and
+`build (repository)` checks before changes reach `master`. Dismiss stale
+approvals, block force pushes/deletion, and apply protections to administrators
+without an agent bypass if configuring this policy.
+
+There is an important identity limitation: the local `gh` session currently uses
+the owner's account, and the owner is the only repository collaborator. GitHub
+cannot distinguish an assistant command from the owner acting manually with the
+same credentials. A PR author also cannot approve their own PR. Requiring an
+approving review now could therefore block the owner's own PRs without providing
+a reliable human-versus-agent approval boundary.
+
+For enforceable separation, use a distinct GitHub App or automation identity for
+agent-authored PRs, require the owner's review (for example through CODEOWNERS
+and required code-owner reviews), and remove agent bypass permissions. Restrict
+the automation credential's ability to merge, administer repository rules, or
+publish releases where the chosen permission model supports it. A tag ruleset
+can restrict creation of release tags to an authorized human identity; tag
+protection alone does not prevent publishing a GitHub Release for an existing
+tag, so release/API permissions must also be considered.
+
+At the time this policy was documented, `master` had no branch protection or
+rulesets, and repository auto-merge was already disabled. No GitHub permissions
+or protection settings were changed as part of this documentation update.
+Choose the separate identity and reviewer arrangement before enabling a required
+review policy that could lock out the sole maintainer.
+
+See GitHub's [protected branch documentation](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches).
 
 ## Custom-domain cutover
 
