@@ -20,6 +20,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path: [root, repository]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -35,29 +38,39 @@ jobs:
 
       - name: Configure site base path
         run: |
-          if [ "$PAGES_CUSTOM_DOMAIN" = "diegoesteves.ink" ]; then
-            echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
+          if [ "$BUILD_PATH" = "root" ]; then
+            echo "SITE_BASE_PATH=" >> "$GITHUB_ENV"
           else
-            echo "NEXT_PUBLIC_BASE_PATH=/${GITHUB_REPOSITORY#*/}" >> "$GITHUB_ENV"
+            echo "SITE_BASE_PATH=/${GITHUB_REPOSITORY#*/}" >> "$GITHUB_ENV"
           fi
         env:
-          PAGES_CUSTOM_DOMAIN: ${{ vars.PAGES_CUSTOM_DOMAIN }}
+          BUILD_PATH: ${{ matrix.path }}
+
+      - name: Lint and type-check
+        run: npm run lint && npm run typecheck
 
       - name: Build static site
         run: npm run build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
+
+      - name: Validate static output
+        run: npm test
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify portfolio interactions
+        run: npm run test:e2e
 
       - name: Set custom domain
-        if: github.ref == 'refs/heads/master' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink'
         run: echo 'diegoesteves.ink' > out/CNAME
 
       - name: Configure GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && ((matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink') || (matrix.path == 'repository' && vars.PAGES_CUSTOM_DOMAIN != 'diegoesteves.ink'))
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && ((matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink') || (matrix.path == 'repository' && vars.PAGES_CUSTOM_DOMAIN != 'diegoesteves.ink'))
         uses: actions/upload-pages-artifact@v3
         with:
           path: out

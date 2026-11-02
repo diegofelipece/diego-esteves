@@ -1,8 +1,51 @@
 # Deployment
 
-The site is exported to static files in `out/` and deployed to GitHub Pages by
-`.github/workflows/pages.yml`. Pull requests to `master` validate the static
-build without publishing it. Only pushes to `master` publish the site.
+The React portfolio uses Vite and React Router Framework Mode with `ssr: false`.
+Every public route is pre-rendered at build time; there is no public-site runtime
+server. `npm run build` generates the site and prepares the static Pages artifact
+in `out/`, including directory-index HTML, route data, root `404.html`, and
+`.nojekyll`. It does not depend on SPA rewrites or an Apache configuration.
+
+`.github/workflows/pages.yml` validates root and repository-prefix builds on pull
+requests to `master`, without publishing either. Only pushes to `master` deploy,
+and only the artifact matching the custom-domain setting is uploaded. Both
+validation builds must pass before the deploy job runs.
+
+## Local development and validation
+
+Use Node.js 22.22 or newer and install dependencies with `npm ci`.
+`npm start` starts the Vite-based development server.
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm test
+npx playwright install chromium
+npm run test:e2e
+```
+
+For repository-prefix validation, use the same prefix for build and tests:
+
+```sh
+SITE_BASE_PATH=/diego-esteves npm run build
+SITE_BASE_PATH=/diego-esteves npm test
+SITE_BASE_PATH=/diego-esteves npm run test:e2e
+```
+
+The browser tests start a local static server without SPA rewrites. To inspect
+the current output manually, run `node tests/static-server.mjs` and open
+`http://127.0.0.1:4173/`. For a prefixed build, set `SITE_BASE_PATH` on that
+command too and open the prefixed URL. Stop the server after checking the site.
+
+The static tests check route HTML, metadata, assets, fonts, and actual HTTP 404s.
+Chromium tests cover desktop/mobile project order, expansion, progressive
+scrolling, browser history, About navigation, media loading, and project content
+with JavaScript disabled.
+
+Project prose and metadata remain in `projects/*.tsx`; this release does not
+introduce a CMS or convert the content model. The registry controls display order,
+and pre-rendered project paths come from those filenames.
 
 ## GitHub Pages path
 
@@ -11,6 +54,23 @@ Until the repository Actions variable `PAGES_CUSTOM_DOMAIN` is set to
 (`/diego-esteves`) so the default project URL remains functional after a rename.
 Once set, the build uses the custom-domain root and
 adds its `CNAME` file.
+
+`SITE_BASE_PATH` is the build-time setting shared by Vite, the router, static HTML,
+asset URLs, and Sass font paths. Keep URLs passed to router navigation relative
+to the configured basename; use `sitePath()` for public assets and raw browser
+URLs. Canonical and social URLs use the production domain independently of the
+preview path. The old `NEXT_PUBLIC_BASE_PATH` setting is no longer used.
+
+## Releases and rollback
+
+Use a work branch from `master`, a pull request back to `master`, and semantic
+commits. A merge triggers validation and Pages deployment; a tag alone does not
+deploy. Verify the deployed routes and interactions before recording the release.
+Continue the existing unprefixed semantic-version tag convention (for example,
+`1.7.0`) and keep the package version aligned.
+
+Roll back using a revert pull request followed by the normal Pages deployment.
+No DNS change is needed for an application rollback.
 
 ## Custom-domain cutover
 
