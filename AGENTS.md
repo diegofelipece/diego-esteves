@@ -14,11 +14,12 @@
 - Use Node.js 24 (`.nvmrc` and CI). Run `npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, and `npm run test:e2e` when changing the site.
 - `npm run build` exports static files to `out/`, including the root `404.html` and `.nojekyll` required for GitHub Pages; Pages serves files without Apache rewrite rules.
 - Use `sitePath()` from `utils/sitePath.ts` for public assets and browser-history URLs so both the GitHub Pages preview path and the production domain root work.
-- Pull requests to `master` build and validate without publishing. Pushes to `master` and the approved annual birthday schedule rebuild and deploy Pages; neither creates tags or releases.
+- Pull requests to `master` build and validate without publishing; only pushes to `master` deploy Pages. Deployments do not create tags or releases.
 - Derive the Pages base path from the repository name until the `PAGES_CUSTOM_DOMAIN` Actions variable is set to `diegoesteves.ink`; only then use root-relative production URLs and add `CNAME`.
 - `SITE_BASE_PATH` configures Vite assets, the router basename, pre-rendering, and Sass fonts. Validate both an empty base path and `/<repository-name>`; router navigation paths must not include the basename a second time.
 - Keep editable content in `content/`: projects, the About page, and homepage settings. Preserve existing project slugs and filenames; never put executable JSX or raw HTML in CMS fields.
 - The validated JSON catalog controls public listings and pre-rendered routes. Sort published projects by numeric order, then slug; a new project must not require application-code changes.
+- Keep the public profile and single birth-date source in `content/profile/diego-esteves.json`. Runtime age/birthday follows the visitor's local date after hydration; preserve the serialized build snapshot for the initial render.
 - When changing CMS behavior, also run `npm run test:cms`. It temporarily creates and removes a named fixture and performs production builds; rebuild afterward before inspecting or deploying `out/`.
 - Keep Decap local-only, with a loopback filesystem proxy. Never export the editor or local-backend configuration to production; `/admin/` must return 404 on Pages.
 - Local CMS saves modify working-tree files only. Review and validate content/media, commit on a normal work branch, and open a PR manually. Never enable the proxy's Git mode or automatic remote publishing.
