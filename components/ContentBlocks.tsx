@@ -2,14 +2,13 @@ import Markdown from 'react-markdown';
 import type { ContentBlock } from '../content/schema';
 import GenericBlock from './GenericBlock';
 import ImageBlock from './ImageBlock';
-import { calculateAge } from '../utils/ageHelper';
-
-export const interpolateContent = (text = '') => text.replaceAll('{{age}}', String(calculateAge()));
+import { interpolateContent, useProfileDate } from './ProfileDate';
 
 export default function ContentBlocks({ blocks, resolveImage }: {
   blocks: ContentBlock[],
   resolveImage?: (path: string) => string,
 }) {
+  const info = useProfileDate();
   return blocks.map((block, index) => {
     if (block.type === 'image') {
       if (!block.src) return null;
@@ -24,7 +23,7 @@ export default function ContentBlocks({ blocks, resolveImage }: {
           em: ({ children }) => <i>{children}</i>,
           img: () => null,
         }}
-      >{interpolateContent(block.type === 'text' ? block.body : block.text)}</Markdown>
+      >{interpolateContent(block.type === 'text' ? block.body : block.text, info)}</Markdown>
     );
     if (block.type === 'text') return <GenericBlock key={index}>{markdown}</GenericBlock>;
     const Heading = `h${block.level || 3}` as 'h2' | 'h3' | 'h4';

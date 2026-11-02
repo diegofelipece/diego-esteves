@@ -12,6 +12,7 @@ Remote GitHub login is a possible future enhancement, not a release prerequisite
 | `content/projects/<slug>.json` | Metadata, cover, order, public inclusion, body blocks, links |
 | `content/pages/about.json` | About title, SEO description, biography blocks |
 | `content/settings/home.json` | Homepage metadata, logo, tagline, banner images, About excerpt |
+| `content/profile/diego-esteves.json` | Public professional profile and birth date used for age |
 
 `admin/config.ts` defines the editor fields. `content/schema.ts` and
 `content/read.ts` validate all JSON and referenced images before every build.
@@ -28,7 +29,8 @@ Body blocks support Markdown text, headings at levels 2/3/4, and images with
 original pixel width/height and alternative text. Inline emphasis and links are
 preserved. Raw HTML, JSX, and inline Markdown images are rejected; use image
 blocks instead. Links must use absolute `https:`, `http:`, or `mailto:` URLs.
-The supported `{{age}}` token preserves the existing calculated age.
+Use `{{age}}` for age and `{{birthday}}` immediately after "years old" for the
+optional ` (today 🎈)` suffix.
 Use descriptive alt text for meaningful images and empty alt text for decoration.
 
 Media values use normalized `/images/...` paths, never deployment prefixes,
@@ -78,6 +80,43 @@ the prefixed URLs. Previews reuse the safe body renderer, tolerate incomplete
 draft blocks, and show the homepage About excerpt. They are not a full responsive
 homepage/navigation preview; the local public site and build validation remain
 authoritative. There are no hosted PR previews.
+
+## Public profile and runtime age
+
+The **Professional profile** collection edits a small JSON Resume-style document.
+`basics.birthDate` is our documented `YYYY-MM-DD` extension, not a standard JSON
+Resume field. It is the only birth-date source for the public site and previews.
+Optional experience/education dates can remain partial or empty when unknown.
+This is a deliberately partial profile, not a claim of full JSON Resume
+conformance or a complete imported CV.
+
+The initial name, professional summary excerpt, ShopFully organization, and
+Mussum Ipsum project/start month come from the public
+[LinkedIn profile](https://www.linkedin.com/in/diegofelipece/). The public page
+does not expose complete job titles/dates or education/skills, so those fields
+were not inferred. The birth date and website/project URLs come from existing
+owner-approved repository data. Review and complete the profile locally; there
+is no automatic LinkedIn sync or runtime external request.
+
+Every build validates and exports the profile as `/diego-esteves.json` (with the
+deployment prefix where applicable). An HTML `rel="alternate"` JSON link exposes
+its URL to tools without adding a visible page section. All fields are public,
+including the explicitly owner-approved birth date: the file can be copied,
+indexed, or combined with other public sources. It neither controls AI use nor
+guarantees discovery/accuracy. Contact details and unrelated personal fields are
+not imported. Do not put private information in this document.
+
+The first page render uses a serialized build-time UTC snapshot and no birthday
+suffix so static HTML and hydration agree. After mount, the visitor's local date
+determines age and whether `{{birthday}}` expands to ` (today 🎈)`. Visitors in
+different timezones may see different results at the same instant, intentionally.
+The date refreshes at local midnight and on focus/visibility resumption; calendar
+midnight scheduling also accounts for daylight-saving changes.
+
+Without JavaScript the build-time age remains visible and can become stale; the
+birthday suffix is never pre-rendered. There is no annual rebuild schedule or
+public-site runtime server. Local admin previews use the same live-date provider;
+editing the birth date changes the site's source after saving the profile.
 
 ## Automated validation and rollback
 

@@ -11,6 +11,12 @@ requests to `master`, without publishing either. Only pushes to `master` deploy,
 and only the artifact matching the custom-domain setting is uploaded. Both
 validation builds must pass before the deploy job runs.
 
+Age updates in the browser after hydration; no annual rebuild is scheduled.
+Static HTML uses a serialized build-date snapshot with no birthday message;
+without JavaScript its age can become stale until the next deployment.
+The public profile is exported to `out/diego-esteves.json` from validated content.
+See [profile and runtime dates](content-management.md#public-profile-and-runtime-age).
+
 ## Local development and validation
 
 Use Node.js 24 (`nvm use`) and install dependencies with `npm ci`.

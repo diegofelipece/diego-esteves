@@ -10,7 +10,7 @@
   ],
   "about": {
     "heading": "TL;DR",
-    "text": "Diego Esteves. {{age}} years old. Born in Brazil, living in Italy. Developer and designer since 2010.",
+    "text": "Diego Esteves. {{age}} years old{{birthday}}. Born in Brazil, living in Italy. Developer and designer since 2010.",
     "image": "/images/diego.jpg",
     "imageAlt": "Diego Esteves",
     "buttonLabel": "more details >"

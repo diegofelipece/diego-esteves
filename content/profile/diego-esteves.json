@@ -1,0 +1,29 @@
+{
+  "basics": {
+    "name": "Diego Esteves",
+    "label": "Designer and developer",
+    "summary": "I'm a designer and developer, long before I even knew what to call it.",
+    "birthDate": "1990-07-26",
+    "url": "https://diegoesteves.ink",
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "url": "https://www.linkedin.com/in/diegofelipece/"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "ShopFully"
+    }
+  ],
+  "education": [],
+  "skills": [],
+  "projects": [
+    {
+      "name": "Mussum Ipsum",
+      "startDate": "2012-10",
+      "url": "https://www.mussumipsum.com/"
+    }
+  ]
+}

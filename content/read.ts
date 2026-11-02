@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import { aboutSchema, homeSchema, projectSchema, publishedProjects } from './schema.ts';
+import { aboutSchema, homeSchema, profileSchema, projectSchema, publishedProjects } from './schema.ts';
 
 export function readContent(root = new URL('../', import.meta.url)) {
   function parse<T>(path: string, schema: z.ZodType<T>): T {
@@ -22,6 +22,7 @@ export function readContent(root = new URL('../', import.meta.url)) {
     });
   const about = parse('content/pages/about.json', aboutSchema);
   const home = parse('content/settings/home.json', homeSchema);
+  const profile = parse('content/profile/diego-esteves.json', profileSchema);
 
   const images = [
     ...home.bannerImages, home.about.image,
@@ -36,5 +37,5 @@ export function readContent(root = new URL('../', import.meta.url)) {
       throw new Error(`Missing content image: ${image} (${fileURLToPath(path)})`);
     }
   }
-  return { projects: publishedProjects(projects), about, home };
+  return { projects: publishedProjects(projects), about, home, profile };
 }

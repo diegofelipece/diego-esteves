@@ -5,9 +5,10 @@ import Button from './Button';
 import { motion, useAnimation } from "framer-motion"
 import sitePath from '../utils/sitePath';
 import { home } from '../content';
-import { interpolateContent } from './ContentBlocks';
+import { interpolateContent, useProfileDate } from './ProfileDate';
 
 const AboutMe = () => {
+  const info = useProfileDate();
   const controls = useAnimation();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const AboutMe = () => {
         <div className={styles.about_me__inner__description}>
           <h2>{about.heading}</h2>
           <p className={styles.about_me__inner__description__text}>
-            {interpolateContent(about.text)}
+            {interpolateContent(about.text, info)}
           </p>
           <Button label={about.buttonLabel} onClick={clickOnAbout}></Button>
         </div>

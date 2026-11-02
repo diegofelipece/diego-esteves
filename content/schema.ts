@@ -25,7 +25,7 @@ const markdown = text.superRefine((value, context) => {
     }
     if ('children' in node) node.children.forEach(visit);
   }
-  visit(fromMarkdown(value.replaceAll('{{age}}', '36')));
+  visit(fromMarkdown(value.replaceAll('{{age}}', '36').replaceAll('{{birthday}}', '')));
 });
 
 export const blockSchema = z.discriminatedUnion('type', [
@@ -58,10 +58,30 @@ export const homeSchema = z.strictObject({
   }),
 });
 
+const calendarDate = text.regex(/^\d{4}-\d{2}-\d{2}$/).refine((value) => {
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}, 'Use a real calendar date in YYYY-MM-DD format');
+export const profileSchema = z.strictObject({
+  basics: z.strictObject({
+    name: text, label: text, summary: text, birthDate: calendarDate, url: link,
+    profiles: z.array(z.strictObject({ network: text, url: link })),
+  }),
+  work: z.array(z.strictObject({
+    name: text, position: z.string().optional(), startDate: z.string().optional(), endDate: z.string().optional(), summary: z.string().optional(),
+  })),
+  education: z.array(z.strictObject({
+    institution: text, area: z.string().optional(), studyType: z.string().optional(), startDate: z.string().optional(), endDate: z.string().optional(),
+  })),
+  skills: z.array(z.strictObject({ name: text, keywords: z.array(text) })),
+  projects: z.array(z.strictObject({ name: text, startDate: z.string().optional(), url: link.or(z.literal('')).optional(), description: z.string().optional() })),
+});
+
 export type ContentBlock = z.infer<typeof blockSchema>;
 export type ProjectContent = z.infer<typeof projectSchema>;
 export type AboutContent = z.infer<typeof aboutSchema>;
 export type HomeContent = z.infer<typeof homeSchema>;
+export type ProfileContent = z.infer<typeof profileSchema>;
 
 export function publishedProjects(projects: ProjectContent[]) {
   return projects.filter((project) => project.published)
