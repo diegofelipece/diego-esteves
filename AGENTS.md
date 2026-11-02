@@ -11,5 +11,5 @@
 - `npm run build` exports the site to `out/`, including the root `404.html` and `.nojekyll` required for GitHub Pages; Pages serves files without Apache rewrite rules.
 - Use `sitePath()` from `utils/sitePath.ts` for public assets and browser-history URLs so both the GitHub Pages preview path and the production domain root work.
 - Pull requests to `master` build and validate the site without publishing it; only pushes to `master` deploy to GitHub Pages.
-- Keep `/nxt-diego-esteves` as the Pages base path until the `PAGES_CUSTOM_DOMAIN` Actions variable is set to `diegoesteves.ink`; only then use root-relative production URLs and add `CNAME`.
+- Derive the Pages base path from the repository name until the `PAGES_CUSTOM_DOMAIN` Actions variable is set to `diegoesteves.ink`; only then use root-relative production URLs and add `CNAME`.
 - Never add hosting credentials or change DNS records as part of a code change. Verify the production deployment before the domain cutover.
