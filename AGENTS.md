@@ -4,6 +4,7 @@
 - Keep the existing portfolio introduction in `README.md`; do not move project/deployment documentation into it.
 - Put topic-based human- and AI-readable project documentation in `docs/`. Update or add a focused file there when documenting project behavior or operations.
 - Reserve `AGENTS.md` for repository instructions that guide AI coding agents.
+- Private notes and project to-dos live in [diegofelipece/notes](https://github.com/diegofelipece/notes). Agents should keep relevant to-dos updated as scope, progress, blockers, and completion change, when access is available; otherwise report that the update is pending. Link only to the repository, not individual private files, and never copy private note contents into this public repository.
 - Use semantic commits (for example, `feat: add project preview` or `fix: correct asset paths`).
 - Name work branches `feature/<name>`, `fix/<name>`, or `chore/<name>`.
 - Use GitHub Flow: branch from `master`, open a pull request back to `master`, and do not use a `develop` branch.
