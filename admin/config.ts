@@ -30,17 +30,10 @@ const blockField = {
   ],
 };
 
-export function cmsConfig({ basePath = '', repository = 'diegofelipece/diego-esteves', oauthUrl = '', local = false } = {}) {
-  if (oauthUrl) {
-    const url = new URL(oauthUrl);
-    if (url.protocol !== 'https:' || url.pathname !== '/' || url.search || url.hash || url.username || url.password) {
-      throw new Error('CMS_OAUTH_URL must be an HTTPS origin without a path, credentials, query, or fragment');
-    }
-  }
+export function cmsConfig({ basePath = '' } = {}) {
   return {
     backend: {
-      name: 'github', repo: repository, branch: 'master',
-      ...(oauthUrl ? { base_url: oauthUrl, auth_endpoint: 'auth' } : {}),
+      name: 'github', repo: 'diegofelipece/diego-esteves', branch: 'master',
       commit_messages: {
         create: 'feat(content): add {{collection}} {{slug}}',
         update: 'content: update {{collection}} {{slug}}',
@@ -49,7 +42,7 @@ export function cmsConfig({ basePath = '', repository = 'diegofelipece/diego-est
         deleteMedia: 'content: remove {{path}}',
       },
     },
-    ...(local ? { local_backend: { url: 'http://localhost:8081/api/v1' } } : {}),
+    local_backend: { url: 'http://localhost:8081/api/v1' },
     load_config_file: false,
     publish_mode: 'editorial_workflow',
     media_folder: 'public/images/uploads',

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile, readdir, stat } from 'node:fs/promises';
+import { access, readFile, readdir, stat } from 'node:fs/promises';
 import { once } from 'node:events';
 import { spawnSync } from 'node:child_process';
 import process from 'node:process';
@@ -78,18 +78,8 @@ test('invalid export prefixes are rejected before existing output is changed', a
   assert.equal(await readFile(new URL('index.html', output), 'utf8'), before);
 });
 
-test('admin configuration and bundles are isolated from the public site', async () => {
-  const config = JSON.parse(await readFile(new URL('admin/config.yml', output), 'utf8'));
-  assert.equal(config.backend.name, 'github');
-  assert.equal(config.publish_mode, 'editorial_workflow');
-  assert.ok(!config.local_backend);
-  assert.ok(config.collections.every((collection) => collection.publish === false));
-  const html = await readFile(new URL('admin/index.html', output), 'utf8');
-  assert.match(html, /noindex, nofollow/);
-  for (const [, asset] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
-    assert.ok(asset.startsWith(`${basePath}/admin/`), asset);
-    assert.ok((await stat(new URL(`.${asset.slice(basePath.length)}`, output))).isFile());
-  }
+test('local CMS files are absent from the production artifact', async () => {
+  await assert.rejects(access(new URL('admin/', output)), { code: 'ENOENT' });
   const homepage = await readFile(new URL('index.html', output), 'utf8');
   assert.ok(!homepage.includes('/admin/assets/'));
 });

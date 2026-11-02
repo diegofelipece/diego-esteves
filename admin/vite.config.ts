@@ -1,23 +1,19 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';
 import { cmsConfig } from './config.ts';
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command }) => {
+  if (command !== 'serve') throw new Error('The CMS is local-only; use npm run cms:start.');
   const root = fileURLToPath(new URL('../', import.meta.url));
-  const env = { ...loadEnv(mode, root, 'CMS_'), ...process.env };
   const basePath = process.env.SITE_BASE_PATH || '';
   const config = cmsConfig({
     basePath,
-    repository: process.env.GITHUB_REPOSITORY || 'diegofelipece/diego-esteves',
-    oauthUrl: env.CMS_OAUTH_URL || '',
-    local: command === 'serve',
   });
   return {
     root: fileURLToPath(new URL('./', import.meta.url)),
     cacheDir: fileURLToPath(new URL('../node_modules/.vite-admin/', import.meta.url)),
     base: `${basePath}/admin/`,
-    publicDir: command === 'serve' ? fileURLToPath(new URL('../public/', import.meta.url)) : false,
-    define: { __CMS_LOCAL__: command === 'serve' },
+    publicDir: fileURLToPath(new URL('../public/', import.meta.url)),
     plugins: [{
       name: 'cms-configuration',
       configureServer(server) {
@@ -35,12 +31,7 @@ export default defineConfig(({ command, mode }) => {
           next();
         });
       },
-      generateBundle() {
-        // JSON is valid YAML and avoids maintaining a second serialization format.
-        this.emitFile({ type: 'asset', fileName: 'config.yml', source: JSON.stringify(config, null, 2) });
-      },
     }],
     server: { fs: { allow: [root] } },
-    build: { outDir: fileURLToPath(new URL('../build/admin/', import.meta.url)), emptyOutDir: true },
   };
 });

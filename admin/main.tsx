@@ -6,20 +6,15 @@ import previewStyles from '../styles/globals.scss?inline';
 import blockStyles from '../styles/components/GenericBlock.module.scss?inline';
 import imageStyles from '../styles/components/ImageBlock.module.scss?inline';
 
-declare const __CMS_LOCAL__: boolean;
-
 const isLoopback = ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname);
 const status = document.getElementById('cms-status')!;
 
 async function initialize() {
+  if (!import.meta.env.DEV || !isLoopback) throw new Error('The content manager is available only in local development on loopback addresses.');
   const response = await fetch(`${import.meta.env.BASE_URL}config.yml`);
   if (!response.ok) throw new Error('Unable to load CMS configuration.');
   const config = await response.json() as CmsConfig;
-  if (__CMS_LOCAL__ && !isLoopback) throw new Error('The local editing backend is restricted to loopback addresses.');
-  if (!__CMS_LOCAL__ && !config.backend.base_url) {
-    status.textContent = 'GitHub login is not configured yet. Set the CMS_OAUTH_URL Actions variable after provisioning the OAuth service, then rebuild. For local editing, use npm run cms:local and npm run cms:start.';
-    return;
-  }
+  if (!config.local_backend) throw new Error('The local editing backend is required.');
   const siteBase = import.meta.env.BASE_URL.replace(/\/admin\/$/, '');
   CMS.registerPreviewStyle([previewStyles, blockStyles, imageStyles].join('\n').replaceAll('/fonts/', `${siteBase}/fonts/`), { raw: true });
   const preview = ({ entry, getAsset }: PreviewTemplateComponentProps) => {

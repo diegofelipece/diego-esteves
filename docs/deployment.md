@@ -49,16 +49,13 @@ Project prose and metadata live in validated `content/projects/*.json`.
 The same published catalog determines homepage order, progressive navigation,
 and pre-rendered routes. `npm run build` validates all content and referenced
 images before exporting the site. See [content management](content-management.md)
-for the model, editor, drafts, media, and OAuth setup.
+for the model, local editor, media, manual content PRs, and future remote login.
 
-The independent `/admin/` build is copied into `out/admin/`; Decap is not loaded
-by public portfolio pages. `CMS_OAUTH_URL` is an optional **public** Actions
-variable containing the HTTPS origin of a separately hosted Decap-compatible
-GitHub OAuth service. Without it, production admin displays setup instructions
-instead of attempting authentication. After provisioning and verifying that
-service, set the variable and rebuild through the normal approved PR workflow.
-Never put an OAuth client secret or access token in Actions variables, content,
-the admin bundle, or the Pages artifact.
+Decap is local-only: the production build neither bundles nor exports the editor
+or its configuration. `/admin/` returns 404 on Pages. Local editing writes files
+to the working tree; review, validation, commits, and PRs remain manual.
+No OAuth host, SSO, credentials, or `CMS_OAUTH_URL` variable is required or wired
+into the current build. Remote login is documented only as a future option.
 
 CI also runs `npm run test:cms` before the final build in both base-path modes.
 This starts loopback-only local editing services, creates a temporary project and

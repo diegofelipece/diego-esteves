@@ -21,7 +21,6 @@ if (basePath) {
 }
 
 copyFileSync(new URL('404/index.html', outputDirectory), new URL('404.html', outputDirectory));
-cpSync(new URL('../build/admin/', import.meta.url), new URL('admin/', outputDirectory), { recursive: true });
 const fallback = new URL('__spa-fallback.html', outputDirectory);
 if (existsSync(fallback)) rmSync(fallback);
 writeFileSync(new URL('.nojekyll', outputDirectory), '');

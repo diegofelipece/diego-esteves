@@ -53,16 +53,10 @@ test('new JSON entries join the catalog without imports; filenames and missing m
   assert.throws(() => readContent(fixtureRoot), /Missing content image/);
 });
 
-test('CMS uses draft-only GitHub workflow and local editing is opt-in', () => {
-  const config = cmsConfig({ basePath: '/renamed-repository', oauthUrl: 'https://oauth.example.com' });
-  assert.equal(config.backend.repo, 'diegofelipece/diego-esteves');
-  assert.equal(config.backend.branch, 'master');
-  assert.equal(config.publish_mode, 'editorial_workflow');
-  assert.ok(!('local_backend' in config));
+test('CMS requires local editing and leaves deployment to reviewed PRs', () => {
+  const config = cmsConfig({ basePath: '/renamed-repository' });
+  assert.equal(config.local_backend.url, 'http://localhost:8081/api/v1');
+  assert.ok(!('base_url' in config.backend));
   assert.ok(config.collections.every((collection) => collection.publish === false));
   assert.equal(config.public_folder, '/images/uploads');
-  assert.ok('local_backend' in cmsConfig({ local: true }));
-  for (const oauthUrl of ['http://oauth.example.com', 'https://oauth.example.com/callback', 'https://user:pass@oauth.example.com']) {
-    assert.throws(() => cmsConfig({ oauthUrl }), /CMS_OAUTH_URL/);
-  }
 });

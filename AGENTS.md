@@ -6,7 +6,6 @@
 - Reserve `AGENTS.md` for repository instructions that guide AI coding agents.
 - Use semantic commits (for example, `feat: add project preview` or `fix: correct asset paths`).
 - Name work branches `feature/<name>`, `fix/<name>`, or `chore/<name>`.
-- Decap-generated editorial branches may use `cms/...`; this exception does not apply to human or agent implementation branches.
 - Use GitHub Flow: branch from `master`, open a pull request back to `master`, and do not use a `develop` branch.
 - Never merge a pull request without the user's explicit approval for that specific PR and its current changes. Plan approval, passing checks, and permission to implement or commit are not merge approval.
 - Never enable auto-merge, merge queues, or unattended publishing to bypass that approval. Leave the PR open for review.
@@ -21,6 +20,7 @@
 - Keep editable content in `content/`: projects, the About page, and homepage settings. Preserve existing project slugs and filenames; never put executable JSX or raw HTML in CMS fields.
 - The validated JSON catalog controls public listings and pre-rendered routes. Sort published projects by numeric order, then slug; a new project must not require application-code changes.
 - When changing CMS behavior, also run `npm run test:cms`. It temporarily creates and removes a named fixture and performs production builds; rebuild afterward before inspecting or deploying `out/`.
-- Keep the Decap local backend loopback-only and development-only. Never add it to production configuration. Set only the public `CMS_OAUTH_URL` in the site build; OAuth credentials belong exclusively to the separately hosted auth service.
-- Keep all CMS collections draft-only (`publish: false`) and merge content PRs through GitHub with explicit user approval. Upload images inside an entry draft; the standalone Media library can commit directly to `master` and is not part of the approved workflow.
+- Keep Decap local-only, with a loopback filesystem proxy. Never export the editor or local-backend configuration to production; `/admin/` must return 404 on Pages.
+- Local CMS saves modify working-tree files only. Review and validate content/media, commit on a normal work branch, and open a PR manually. Never enable the proxy's Git mode or automatic remote publishing.
+- Remote GitHub OAuth/SSO is a future option, not a current requirement. Do not provision auth services or introduce credentials without a separately approved scope.
 - Never add hosting credentials or change DNS records as part of a code change. Verify the production deployment before the domain cutover.

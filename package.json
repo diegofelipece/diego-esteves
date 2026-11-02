@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "concurrently --kill-others --names site,cms,proxy \"npm start\" \"npm run cms:start\" \"npm run cms:local\"",
-    "build": "npm run validate:content && react-router build && vite build --config admin/vite.config.ts && node ./scripts/prepare-static-export.js",
+    "build": "npm run validate:content && react-router build && node ./scripts/prepare-static-export.js",
     "validate:content": "node --experimental-strip-types scripts/validate-content.ts",
     "cms:local": "decap-server",
     "cms:start": "vite --config admin/vite.config.ts --host 127.0.0.1 --port 4175",
