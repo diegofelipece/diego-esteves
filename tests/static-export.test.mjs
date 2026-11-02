@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { once } from 'node:events';
+import { spawnSync } from 'node:child_process';
 import process from 'node:process';
 import { URL } from 'node:url';
 import { test } from 'node:test';
@@ -61,4 +62,15 @@ test('a rewrite-free static server serves direct routes and a true 404 response'
   assert.match(await missing.text(), /Page not found/);
   assert.equal(await readFile(new URL('.nojekyll', output), 'utf8'), '');
   assert.match(await readFile(new URL('404.html', output), 'utf8'), /noindex, nofollow/);
+});
+
+test('invalid export prefixes are rejected before existing output is changed', async () => {
+  const before = await readFile(new URL('index.html', output), 'utf8');
+  const result = spawnSync(process.execPath, ['scripts/prepare-static-export.js'], {
+    env: { ...process.env, SITE_BASE_PATH: '/../outside' },
+    encoding: 'utf8',
+  });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /SITE_BASE_PATH must be empty or a single repository path/);
+  assert.equal(await readFile(new URL('index.html', output), 'utf8'), before);
 });

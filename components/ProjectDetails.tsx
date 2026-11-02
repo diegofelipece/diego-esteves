@@ -39,7 +39,7 @@ const ProjectDetails = ({ excerpt, expandProject, alwaysExpanded }: Props) => {
       if (isOnRectRange) {
         const url = `/projects/${excerpt.slug}/`;
         if (url !== location.pathname) {
-          navigate(url, { replace: true, preventScrollReset: true, state: { scrollProject: true } });
+          navigate(url, { preventScrollReset: true, state: { scrollProject: true } });
         }
       }
     };

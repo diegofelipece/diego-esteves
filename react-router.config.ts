@@ -8,6 +8,6 @@ const projectPaths = readdirSync(new URL('./projects/', import.meta.url))
 
 export default {
   ssr: false,
-  basename: basePath || '/',
-  prerender: ['/', '/about/', '/404/', ...projectPaths].map((path) => `${basePath}${path}`),
+  basename: `${basePath}/`,
+  prerender: ['/', '/about/', '/404/', ...projectPaths],
 } satisfies Config;

@@ -10,7 +10,6 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `$basePath: "${basePath}";`,
         silenceDeprecations: ['import'],
       },
     },

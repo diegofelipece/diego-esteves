@@ -1,9 +1,9 @@
 @mixin font-face($family, $name, $weight, $style) {
 	@font-face {
 		font-family: $family;
-		src: url("#{$basePath}/fonts/" + $name + ".eot?#iefix") format("embedded-opentype"),
-			url("#{$basePath}/fonts/" + $name + ".otf") format("opentype"), url("#{$basePath}/fonts/" + $name + ".woff") format("woff"),
-			url("#{$basePath}/fonts/" + $name + ".ttf") format("truetype"), url("#{$basePath}/fonts/" + $name + ".svg#" + $name + "") format("svg");
+		src: url("/fonts/" + $name + ".eot?#iefix") format("embedded-opentype"),
+			url("/fonts/" + $name + ".otf") format("opentype"), url("/fonts/" + $name + ".woff") format("woff"),
+			url("/fonts/" + $name + ".ttf") format("truetype"), url("/fonts/" + $name + ".svg#" + $name + "") format("svg");
 		font-weight: $weight;
 		font-style: $style;
 	}

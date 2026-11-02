@@ -6,6 +6,10 @@ const clientDirectory = new URL('../build/client/', import.meta.url);
 const outputDirectory = new URL('../out/', import.meta.url);
 const basePath = process.env.SITE_BASE_PATH || '';
 
+if (basePath && !/^\/[A-Za-z0-9_-][A-Za-z0-9._-]*$/.test(basePath)) {
+  throw new Error('SITE_BASE_PATH must be empty or a single repository path such as /diego-esteves');
+}
+
 rmSync(outputDirectory, { recursive: true, force: true });
 cpSync(clientDirectory, outputDirectory, { recursive: true });
 
