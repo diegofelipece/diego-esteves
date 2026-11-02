@@ -6,13 +6,14 @@ type Props = {
   alt?: string;
   width?: number;
   heigth?: number;
+  resolvedSrc?: string;
 }
 
-const ImageBlock = ({ src, alt, width, heigth }: Props) => {
+const ImageBlock = ({ src, alt, width, heigth, resolvedSrc }: Props) => {
   return (
     <div className={styles.image_block}>
       <img
-        src={sitePath(`/images/${src}`)}
+        src={resolvedSrc || sitePath(src)}
         alt={alt || ''}
         width={width}
         height={heigth}

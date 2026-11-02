@@ -1,0 +1,34 @@
+{
+  "slug": "cash-me",
+  "title": "Cash.me",
+  "category": "web development",
+  "coverImage": "/images/projects/cashme/cover.jpg",
+  "order": 6,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "A Fintech focused on fast and online loans.\n\nI implemented the front-end of the tool dashboard, creating static views that later was integrated with Laravel + Vue.js.   \n I've joined the project as a freelancer, working for [MeZA](http://www.meza1618.com.br/), the agency that was responsible for developing the project.\n\n( ~ circa 2018/07 )"
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/cashme/web.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 995
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/cashme/smartphone.jpg",
+      "alt": "",
+      "width": 320,
+      "height": 599
+    }
+  ],
+  "links": [
+    {
+      "url": "http://cliente.diegoesteves.ink/cash-me/"
+    }
+  ]
+}

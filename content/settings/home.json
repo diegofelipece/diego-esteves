@@ -1,0 +1,18 @@
+{
+  "title": "Welcome to my portfolio",
+  "description": "Diego Esteves portfolio",
+  "logoTitle": "Diego\nEsteves",
+  "tagline": "designer and developer",
+  "bannerImages": [
+    "/images/big-banner/mala.jpg",
+    "/images/big-banner/panteao.jpg",
+    "/images/big-banner/sao-paulo.jpg"
+  ],
+  "about": {
+    "heading": "TL;DR",
+    "text": "Diego Esteves. {{age}} years old. Born in Brazil, living in Italy. Developer and designer since 2010.",
+    "image": "/images/diego.jpg",
+    "imageAlt": "Diego Esteves",
+    "buttonLabel": "more details >"
+  }
+}

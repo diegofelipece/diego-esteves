@@ -51,6 +51,8 @@ jobs:
 
       - name: Build static site
         run: npm run build
+        env:
+          CMS_OAUTH_URL: ${{ vars.CMS_OAUTH_URL }}
 
       - name: Validate static output
         run: npm test

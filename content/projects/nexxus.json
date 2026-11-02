@@ -1,0 +1,51 @@
+{
+  "slug": "nexxus",
+  "title": "Nexxus UK",
+  "category": "design",
+  "coverImage": "/images/projects/nexxus/cover.jpg",
+  "order": 5,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "Design for a Nexxus UK iOS App created for a local marketing action on drugstores. The concept was to create a tool to help the clients on finding the perfect product for their hairs.\n\nProject made as freelacer for [CUBO.CC](http://www.cubo.cc/) working with [Raisa Almeida](https://www.linkedin.com/in/raisatrinny/) for [Nexxus UK](https://www.nexxus.com/uk/home.html).\n\n( ~ circa 2018/07 )"
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/nexxus/section1.jpeg",
+      "alt": "",
+      "width": 1000,
+      "height": 613
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/nexxus/nexxus-app-diagnosis_ipad-Question-1-01-@2x.jpeg",
+      "alt": "",
+      "width": 2049,
+      "height": 1537
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/nexxus/nexxus-app-diagnosis_ipad-Question-7-Select-@2x.jpeg",
+      "alt": "",
+      "width": 2049,
+      "height": 1537
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/nexxus/nexxus-app-diagnosis_ipad-Question-9-Select-02-@2x.jpeg",
+      "alt": "",
+      "width": 2049,
+      "height": 1537
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/nexxus/nexxus-app-diagnosis_ipad-Result-Sharing-@2x.jpeg",
+      "alt": "",
+      "width": 2049,
+      "height": 1537
+    }
+  ],
+  "links": []
+}

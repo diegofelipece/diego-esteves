@@ -1,0 +1,64 @@
+{
+  "slug": "gucci-brand-experience",
+  "title": "Gucci Brand Experience",
+  "category": "web development and design",
+  "coverImage": "/images/projects/gucci-brand-experience/cover.jpg",
+  "order": 3,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "Besides many features and regular maintenance, I had the mission of renovating some views of the project, reviewing UI and them implementing it. It is a web project and a sort of catalog, used during some special events to show exclusive products for selected clients.\n\nThat work happened while I was the team leader of a 4 developers squad, working at Euris. The stack was PHP/Lumen/MariaDb for the back end and Angular on the front end.\n\n( started at 2020/05 until 2022/09 )"
+    },
+    {
+      "type": "heading",
+      "text": "Product list – *before*",
+      "level": 3
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/gucci-brand-experience/list-before.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 749
+    },
+    {
+      "type": "heading",
+      "text": "Product list – *after*",
+      "level": 3
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/gucci-brand-experience/list-after.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 1278
+    },
+    {
+      "type": "heading",
+      "text": "Single product page – *before*",
+      "level": 3
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/gucci-brand-experience/product-before.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 1108
+    },
+    {
+      "type": "heading",
+      "text": "Single product page – *after*",
+      "level": 3
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/gucci-brand-experience/product-after.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 1631
+    }
+  ],
+  "links": []
+}

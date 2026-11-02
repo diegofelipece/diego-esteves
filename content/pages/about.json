@@ -1,0 +1,21 @@
+{
+  "title": "About me",
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "Hi, I'm Diego Esteves.\n\nI'm {{age}} years old, born in São Paulo, Brazil, and currently based in Bologna, Italy. I graduated in 2012 with a degree in Advertising Design from [Mackenzie University](https://www.linkedin.com/school/mackenzie1870) (São Paulo), and I've been working as a web designer and developer since 2010.\n\nMy career started in design and advertising, with a strong focus on digital media. Back in 2010, the internet looked quite different — my first steps were in creating personal blogs and developing Flash websites. As the web evolved, I transitioned from Flash to HTML5, jQuery, and WordPress, gradually moving deeper into what we now call frontend development. Over the years, I’ve worked across both design and development, covering digital and print formats.\n\nDuring that period, I had the opportunity to collaborate with small design studios and leading Brazilian e-commerce platforms such as Netshoes, B2W Group, and Dafiti. In 2015, I began working as a freelancer and immersed myself in the world of Single Page Applications — primarily using React and later Angular. I collaborated with companies and agencies including Unilever, Itaú, Anglo and others.\n\nIn 2018, I moved to Bologna, Italy. The following year, I joined Gruppo Euris, which initially led me to work with Shopfully as an external Frontend Developer (until May 2020), and later as a Fullstack Developer and Team Leader of a four-person development team at Gucci. In September 2022, I left Gruppo Euris and joined Shopfully as a Fullstack Developer (React, Node, PHP), where I currently work."
+    },
+    {
+      "type": "image",
+      "src": "/images/self.jpg",
+      "alt": "",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "type": "text",
+      "body": "As an independent comic writer and illustrator, I’ve self-published a few short stories. In Portuguese: *A Última Vez Que Vi Richard* (2014), *A Vida Marinha* (2017), and *Agouro* (2017); and in Italian: *Le Avventure Acquatiche* (2025) and *Forrest Gump* (2025). I also contributed to the first issue of the magazine *Pé de Cabra* (2018), and I’m currently working on new projects.\n\nYou can find more information about my skills and experience on my [LinkedIn](https://www.linkedin.com/in/diegofelipece/) or by sending me a “hello” at [diegofelipece@gmail.com](mailto:diegofelipece@gmail.com)"
+    }
+  ]
+}

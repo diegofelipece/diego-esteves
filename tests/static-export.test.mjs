@@ -10,9 +10,11 @@ import { staticServer } from './static-server.mjs';
 const { fetch } = globalThis;
 const basePath = process.env.SITE_BASE_PATH || '';
 const output = new URL('../out/', import.meta.url);
-const projectFiles = (await readdir(new URL('../projects/', import.meta.url)))
-  .filter((name) => name.endsWith('.tsx'));
-const paths = ['/', '/about/', ...projectFiles.map((name) => `/projects/${name.slice(0, -4)}/`)];
+const projectFiles = (await readdir(new URL('../content/projects/', import.meta.url)))
+  .filter((name) => name.endsWith('.json'));
+const projects = await Promise.all(projectFiles.map(async (name) =>
+  JSON.parse(await readFile(new URL(`../content/projects/${name}`, import.meta.url), 'utf8'))));
+const paths = ['/', '/about/', ...projects.filter((project) => project.published).map((project) => `/projects/${project.slug}/`)];
 
 test('every public route has meaningful HTML, one title, and route-specific canonical metadata', async () => {
   for (const path of paths) {
@@ -70,7 +72,24 @@ test('invalid export prefixes are rejected before existing output is changed', a
     env: { ...process.env, SITE_BASE_PATH: '/../outside' },
     encoding: 'utf8',
   });
+
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /SITE_BASE_PATH must be empty or a single repository path/);
   assert.equal(await readFile(new URL('index.html', output), 'utf8'), before);
+});
+
+test('admin configuration and bundles are isolated from the public site', async () => {
+  const config = JSON.parse(await readFile(new URL('admin/config.yml', output), 'utf8'));
+  assert.equal(config.backend.name, 'github');
+  assert.equal(config.publish_mode, 'editorial_workflow');
+  assert.ok(!config.local_backend);
+  assert.ok(config.collections.every((collection) => collection.publish === false));
+  const html = await readFile(new URL('admin/index.html', output), 'utf8');
+  assert.match(html, /noindex, nofollow/);
+  for (const [, asset] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
+    assert.ok(asset.startsWith(`${basePath}/admin/`), asset);
+    assert.ok((await stat(new URL(`.${asset.slice(basePath.length)}`, output))).isFile());
+  }
+  const homepage = await readFile(new URL('index.html', output), 'utf8');
+  assert.ok(!homepage.includes('/admin/assets/'));
 });
