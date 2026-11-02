@@ -1,16 +1,16 @@
-'use client'
-
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import styles from '../styles/components/BigBanner.module.scss';
 import sortBigBannerImage from '../utils/sortBigBannerImage';
 import Logo from './Logo';
+import sitePath from '../utils/sitePath';
 
-type Props = {
-}
+const BigBanner = () => {
+  const [bgUrl, setBgUrl] = useState(() => sitePath('/images/big-banner/mala.jpg'));
 
-const BigBanner = ({}: Props) => {
-  const bgUrl = useMemo(() => sortBigBannerImage(), []);
+  useEffect(() => {
+    setBgUrl(sortBigBannerImage());
+  }, []);
 
   const variants = {
     hidden: { opacity: 0 },

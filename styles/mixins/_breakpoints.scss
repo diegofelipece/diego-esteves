@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $grid-breakpoints: (
   xs: 0,
   sm: 576px,
@@ -7,26 +9,26 @@ $grid-breakpoints: (
 ) !default;
 
 @mixin down-breakpoint($breakpoint) {
-  @if map-has-key($grid-breakpoints, $breakpoint) {
-    @media only screen and (max-width : map-get($grid-breakpoints, $breakpoint)) {
+  @if map.has-key($grid-breakpoints, $breakpoint) {
+    @media only screen and (max-width : map.get($grid-breakpoints, $breakpoint)) {
       @content;
     }
   }
 
   @else {
-    @error "Unfortunately, no value could be retrieved from `#{$breakpoint}`. Available breakpoints are: #{map-keys($grid-breakpoints)}.";
+    @error "Unfortunately, no value could be retrieved from `#{$breakpoint}`. Available breakpoints are: #{map.keys($grid-breakpoints)}.";
   }
 }
 
 @mixin up-breakpoint($breakpoint) {
-  @if map-has-key($grid-breakpoints, $breakpoint) {
-    @media only screen and (min-width : map-get($grid-breakpoints, $breakpoint)) {
+  @if map.has-key($grid-breakpoints, $breakpoint) {
+    @media only screen and (min-width : map.get($grid-breakpoints, $breakpoint)) {
       @content;
     }
   }
 
   @else {
-    @error "Unfortunately, no value could be retrieved from `#{$breakpoint}`. Available breakpoints are: #{map-keys($grid-breakpoints)}.";
+    @error "Unfortunately, no value could be retrieved from `#{$breakpoint}`. Available breakpoints are: #{map.keys($grid-breakpoints)}.";
   }
 }
 
@@ -34,11 +36,11 @@ $grid-breakpoints: (
   @if (
     $initial-breakpoint
     and $final-breakpoint
-    and map-has-key($grid-breakpoints, $initial-breakpoint)
-    and map-has-key($grid-breakpoints, $final-breakpoint)
+    and map.has-key($grid-breakpoints, $initial-breakpoint)
+    and map.has-key($grid-breakpoints, $final-breakpoint)
   ) {
-    $b1: map-get($grid-breakpoints, $initial-breakpoint);
-    $b2: map-get($grid-breakpoints, $final-breakpoint);
+    $b1: map.get($grid-breakpoints, $initial-breakpoint);
+    $b2: map.get($grid-breakpoints, $final-breakpoint);
 
     @media only screen and (min-width : $b1) and (max-width : $b2) {
       @content;
@@ -46,6 +48,6 @@ $grid-breakpoints: (
   }
 
   @else {
-    @error "You need to define valid initial and final breakpoints. Available breakpoints are: #{map-keys($grid-breakpoints)}.";
+    @error "You need to define valid initial and final breakpoints. Available breakpoints are: #{map.keys($grid-breakpoints)}.";
   }
 }

@@ -1,6 +1,5 @@
 import GenericBlock from "../components/GenericBlock";
 import ImageBlock from "../components/ImageBlock";
-import SeoTags from "../components/SeoTags";
 import { Project, ProjectExerpt } from "../types/Project";
 
 export const excerpt: ProjectExerpt = {
@@ -14,7 +13,6 @@ export const assentamento: Project = {
   excerpt,
   content: (
     <>
-      <SeoTags pageDescription="Diego Esteves portfolio" pageTitle={excerpt.title} pageSlug={excerpt.slug} />
       <GenericBlock>
         <p>
           My friend <a href="https://open.spotify.com/intl-pt/artist/5nYdFc9MmMrQcHyGPv19Mm?si=1uTKH2SWRvKshUVsht_gwQ"  target="__blank">Rogério Tavares</a>, an amazing musician, invited me to do the graphic project for his new album, recording only <a href="https://en.wikipedia.org/wiki/Chico_Buarque" target="__blank">Chico Buarque</a> songs, released on 2023 September.

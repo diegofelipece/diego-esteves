@@ -1,6 +1,6 @@
 import { motion, useAnimation } from "framer-motion"
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import GenericBlock from '../../components/GenericBlock'
 import ImageBlock from '../../components/ImageBlock'
 import Logo from '../../components/Logo'
@@ -10,14 +10,17 @@ import { calculateAge } from '../../utils/ageHelper'
 
 const age = calculateAge();
 
-const About: NextPage = () => {
+const About = () => {
   const controls = useAnimation();
-  const router = useRouter();
+  const navigate = useNavigate();
 
-  controls.start({
-    width: "0%",
-    transition: { duration: 0.6, delay: 0.3 },
-  })  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    controls.start({
+      width: "0%",
+      transition: { duration: 0.6, delay: 0.3 },
+    });
+  }, [controls]);
 
   const onReturnToHome = () => {
     controls.start({
@@ -25,7 +28,7 @@ const About: NextPage = () => {
       backgroundColor: '#896194',
       transition: { duration: 0.6 },  
     }).then(() => {
-      router.push('/');
+      navigate('/');
     });
   };
 
