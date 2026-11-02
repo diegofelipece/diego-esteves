@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import { fileURLToPath } from 'node:url';
-import { cmsConfig } from './config';
+import { cmsConfig } from './config.ts';
 
 export default defineConfig(({ command, mode }) => {
   const root = fileURLToPath(new URL('../', import.meta.url));
