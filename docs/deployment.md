@@ -43,9 +43,26 @@ Chromium tests cover desktop/mobile project order, expansion, progressive
 scrolling, browser history, About navigation, media loading, and project content
 with JavaScript disabled.
 
-Project prose and metadata remain in `projects/*.tsx`; this release does not
-introduce a CMS or convert the content model. The registry controls display order,
-and pre-rendered project paths come from those filenames.
+Project prose and metadata live in validated `content/projects/*.json`.
+The same published catalog determines homepage order, progressive navigation,
+and pre-rendered routes. `npm run build` validates all content and referenced
+images before exporting the site. See [content management](content-management.md)
+for the model, editor, drafts, media, and OAuth setup.
+
+The independent `/admin/` build is copied into `out/admin/`; Decap is not loaded
+by public portfolio pages. `CMS_OAUTH_URL` is an optional **public** Actions
+variable containing the HTTPS origin of a separately hosted Decap-compatible
+GitHub OAuth service. Without it, production admin displays setup instructions
+instead of attempting authentication. After provisioning and verifying that
+service, set the variable and rebuild through the normal approved PR workflow.
+Never put an OAuth client secret or access token in Actions variables, content,
+the admin bundle, or the Pages artifact.
+
+CI also runs `npm run test:cms` before the final build in both base-path modes.
+This starts loopback-only local editing services, creates a temporary project and
+uploaded image, checks the preview, and proves that publication/withdrawal
+changes the generated HTML without application-code edits. Fixtures are removed,
+and the final build recreates the deployable artifact from real content.
 
 ## GitHub Pages path
 

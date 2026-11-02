@@ -6,6 +6,7 @@
 - Reserve `AGENTS.md` for repository instructions that guide AI coding agents.
 - Use semantic commits (for example, `feat: add project preview` or `fix: correct asset paths`).
 - Name work branches `feature/<name>`, `fix/<name>`, or `chore/<name>`.
+- Decap-generated editorial branches may use `cms/...`; this exception does not apply to human or agent implementation branches.
 - Use GitHub Flow: branch from `master`, open a pull request back to `master`, and do not use a `develop` branch.
 - Never merge a pull request without the user's explicit approval for that specific PR and its current changes. Plan approval, passing checks, and permission to implement or commit are not merge approval.
 - Never enable auto-merge, merge queues, or unattended publishing to bypass that approval. Leave the PR open for review.
@@ -17,5 +18,9 @@
 - Pull requests to `master` build and validate the site without publishing it; only pushes to `master` deploy to GitHub Pages.
 - Derive the Pages base path from the repository name until the `PAGES_CUSTOM_DOMAIN` Actions variable is set to `diegoesteves.ink`; only then use root-relative production URLs and add `CNAME`.
 - `SITE_BASE_PATH` configures Vite assets, the router basename, pre-rendering, and Sass fonts. Validate both an empty base path and `/<repository-name>`; router navigation paths must not include the basename a second time.
-- Keep project content in `projects/*.tsx` for now. Pre-render paths are derived from those filenames; the registry in `projects/_index.ts` controls homepage order.
+- Keep editable content in `content/`: projects, the About page, and homepage settings. Preserve existing project slugs and filenames; never put executable JSX or raw HTML in CMS fields.
+- The validated JSON catalog controls public listings and pre-rendered routes. Sort published projects by numeric order, then slug; a new project must not require application-code changes.
+- When changing CMS behavior, also run `npm run test:cms`. It temporarily creates and removes a named fixture and performs production builds; rebuild afterward before inspecting or deploying `out/`.
+- Keep the Decap local backend loopback-only and development-only. Never add it to production configuration. Set only the public `CMS_OAUTH_URL` in the site build; OAuth credentials belong exclusively to the separately hosted auth service.
+- Keep all CMS collections draft-only (`publish: false`) and merge content PRs through GitHub with explicit user approval. Upload images inside an entry draft; the standalone Media library can commit directly to `master` and is not part of the approved workflow.
 - Never add hosting credentials or change DNS records as part of a code change. Verify the production deployment before the domain cutover.
