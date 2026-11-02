@@ -7,8 +7,9 @@ build without publishing it. Only pushes to `master` publish the site.
 ## GitHub Pages path
 
 Until the repository Actions variable `PAGES_CUSTOM_DOMAIN` is set to
-`diegoesteves.ink`, the build uses `/nxt-diego-esteves` so the default project
-URL remains functional. Once set, the build uses the custom-domain root and
+`diegoesteves.ink`, the build derives its base path from the repository name
+(`/diego-esteves`) so the default project URL remains functional after a rename.
+Once set, the build uses the custom-domain root and
 adds its `CNAME` file.
 
 ## Custom-domain cutover
