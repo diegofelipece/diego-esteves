@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.22.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
+    "dev": "concurrently --kill-others --names site,cms,proxy \"npm start\" \"npm run cms:start\" \"npm run cms:local\"",
     "build": "npm run validate:content && react-router build && vite build --config admin/vite.config.ts && node ./scripts/prepare-static-export.js",
     "validate:content": "node --experimental-strip-types scripts/validate-content.ts",
     "cms:local": "decap-server",
@@ -31,9 +32,10 @@
     "@playwright/test": "1.64.1",
     "@react-router/dev": "8.5.1",
     "@react-router/node": "8.5.1",
-    "@types/node": "22.20.5",
+    "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "concurrently": "10.0.6",
     "decap-cms-app": "3.17.3",
     "decap-server": "3.11.6",
     "eslint": "10.14.0",

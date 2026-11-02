@@ -60,7 +60,16 @@ Changing banner images does not add layout or featured-project controls.
 
 ## Local editing
 
-Use Node.js 22.22 or newer and `npm ci`. Start these in separate terminals:
+Use Node.js 24 (`nvm use`) and `npm ci`. Start all three local services together:
+
+```sh
+npm run dev
+```
+
+This runs the public site, CMS editor, and filesystem proxy in parallel with
+labeled logs. Ctrl+C stops all three; if one exits, the others stop too.
+Do not also start duplicate services on the same ports.
+For individual services, use separate terminals:
 
 ```sh
 npm run cms:local
@@ -77,8 +86,8 @@ Do not start this proxy with Git mode or expose its unauthenticated API to a
 network. Keep the editor and proxy loopback-only and stop both when finished.
 Production builds never emit `local_backend`.
 
-For prefix testing, start both `cms:start` and the public development server with
-`SITE_BASE_PATH=/diego-esteves`; open the correspondingly prefixed admin URL.
+For prefix testing, run `SITE_BASE_PATH=/diego-esteves npm run dev`;
+open the correspondingly prefixed admin URL.
 `npm run test:cms` manages its own editor/proxy and requires their ports
 (4175/8081) to be unused. It creates a named fixture, saves an uploaded image,
 checks preview rendering, builds its new route, then verifies withdrawal removes

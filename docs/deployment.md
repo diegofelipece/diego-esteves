@@ -13,8 +13,10 @@ validation builds must pass before the deploy job runs.
 
 ## Local development and validation
 
-Use Node.js 22.22 or newer and install dependencies with `npm ci`.
-`npm start` starts the Vite-based development server.
+Use Node.js 24 (`nvm use`) and install dependencies with `npm ci`.
+`npm start` starts only the Vite-based public development server.
+`npm run dev` starts the public site, CMS editor, and local CMS proxy together
+with labeled logs. Ctrl+C stops all three; if one exits, the others stop too.
 
 ```sh
 npm run lint

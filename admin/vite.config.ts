@@ -14,6 +14,7 @@ export default defineConfig(({ command, mode }) => {
   });
   return {
     root: fileURLToPath(new URL('./', import.meta.url)),
+    cacheDir: fileURLToPath(new URL('../node_modules/.vite-admin/', import.meta.url)),
     base: `${basePath}/admin/`,
     publicDir: command === 'serve' ? fileURLToPath(new URL('../public/', import.meta.url)) : false,
     define: { __CMS_LOCAL__: command === 'serve' },

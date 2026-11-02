@@ -12,7 +12,7 @@
 - Never enable auto-merge, merge queues, or unattended publishing to bypass that approval. Leave the PR open for review.
 - Never create or push release tags, publish GitHub Releases, or trigger a release without the user's separate explicit approval for that version. Approval to merge is not approval to release.
 - This is a React portfolio built with Vite and React Router Framework Mode. It is pre-rendered with `ssr: false`; never add a public-site runtime server or rely on SPA rewrites.
-- Use Node.js 22.22 or newer. Run `npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, and `npm run test:e2e` when changing the site.
+- Use Node.js 24 (`.nvmrc` and CI). Run `npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, and `npm run test:e2e` when changing the site.
 - `npm run build` exports static files to `out/`, including the root `404.html` and `.nojekyll` required for GitHub Pages; Pages serves files without Apache rewrite rules.
 - Use `sitePath()` from `utils/sitePath.ts` for public assets and browser-history URLs so both the GitHub Pages preview path and the production domain root work.
 - Pull requests to `master` build and validate the site without publishing it; only pushes to `master` deploy to GitHub Pages.
