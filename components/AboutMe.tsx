@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router';
 import styles from '../styles/components/AboutMe.module.scss';
 import Button from './Button';
 import { motion, useAnimation } from "framer-motion"
-import { calculateAge } from '../utils/ageHelper';
 import sitePath from '../utils/sitePath';
+import { home } from '../content';
+import { interpolateContent } from './ContentBlocks';
 
 const AboutMe = () => {
   const controls = useAnimation();
@@ -26,7 +27,7 @@ const AboutMe = () => {
     })  
   };
 
-  const age = calculateAge();
+  const about = home.about;
 
   return (
     <div className={styles.about_me}>
@@ -36,18 +37,18 @@ const AboutMe = () => {
       <div className={styles.about_me__inner}>
         <div className={styles.about_me__inner__image}>
           <img
-            src={sitePath('/images/diego.jpg')}
-            alt="Diego Esteves"
+            src={sitePath(about.image)}
+            alt={about.imageAlt}
             width={238}
             height={238}
           />
         </div>
         <div className={styles.about_me__inner__description}>
-          <h2>TL;DR</h2>
+          <h2>{about.heading}</h2>
           <p className={styles.about_me__inner__description__text}>
-            Diego Esteves. {age} years old. Born in Brazil, living in Italy. Developer and designer since 2010. 
+            {interpolateContent(about.text)}
           </p>
-          <Button label={'more details >'} onClick={clickOnAbout}></Button>
+          <Button label={about.buttonLabel} onClick={clickOnAbout}></Button>
         </div>
       </div>
     </div>

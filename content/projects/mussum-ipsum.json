@@ -1,0 +1,38 @@
+{
+  "slug": "mussum-ipsum",
+  "title": "Mussum Ipsum",
+  "category": "web development and design",
+  "coverImage": "/images/projects/mussum-ipsum/cover.jpg",
+  "order": 1,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "In 2012 I had the idea of creating a custom \"lorem ipsum\" generator based on a classic Brazilian TV character called Mussum, so I designed a two-page website and put it online in a week. On the second day, the project went viral through Brazilian designers and developers and reached an unexpected 36.294 pageviews, during the first 5 days. As I write this on 2023 October, the term \"mussum ipsum\" reached more than +15,000 results on Google Search and it's present on more than +3,000 code files on Github.\n\nCurrently, the project is on the 3rd version (static Next.js) which is a work in progress as new features and content may come by as I try to make it profitable someway.\n\n( from 10/2012 until now )"
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/mussum-ipsum/web.jpg",
+      "alt": "",
+      "width": 1761,
+      "height": 1438
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/mussum-ipsum/smartphone.jpg",
+      "alt": "",
+      "width": 320,
+      "height": 685
+    }
+  ],
+  "links": [
+    {
+      "url": "https://www.mussumipsum.com/"
+    },
+    {
+      "url": "https://github.com/diegofelipece/mussum-ipsum",
+      "icon": "github"
+    }
+  ]
+}

@@ -3,15 +3,20 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.22.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
-    "build": "react-router build && node ./scripts/prepare-static-export.js",
+    "dev": "concurrently --kill-others --names site,cms,proxy \"npm start\" \"npm run cms:start\" \"npm run cms:local\"",
+    "build": "npm run validate:content && react-router build && node ./scripts/prepare-static-export.js",
+    "validate:content": "node --experimental-strip-types scripts/validate-content.ts",
+    "cms:local": "decap-server",
+    "cms:start": "vite --config admin/vite.config.ts --host 127.0.0.1 --port 4175",
     "start": "react-router dev",
     "lint": "eslint .",
     "typecheck": "react-router typegen && tsc",
-    "test": "node --test tests/*.test.mjs",
-    "test:e2e": "playwright test"
+    "test": "node --experimental-strip-types --test tests/*.test.mjs tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "test:cms": "playwright test --config playwright.cms.config.ts"
   },
   "dependencies": {
     "framer-motion": "14.9.0",
@@ -19,6 +24,7 @@
     "normalize.css": "8.0.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "react-markdown": "10.1.0",
     "react-router": "8.5.1"
   },
   "devDependencies": {
@@ -26,16 +32,21 @@
     "@playwright/test": "1.64.1",
     "@react-router/dev": "8.5.1",
     "@react-router/node": "8.5.1",
-    "@types/node": "22.20.5",
+    "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "concurrently": "10.0.6",
+    "decap-cms-app": "3.17.3",
+    "decap-server": "3.11.6",
     "eslint": "10.14.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "sass": "1.107.1",
     "typescript": "6.0.3",
     "typescript-eslint": "8.72.1",
     "vite": "8.3.5",
-    "vite-plugin-svgr": "5.2.0"
+    "vite-plugin-svgr": "5.2.0",
+    "zod": "4.6.7",
+    "mdast-util-from-markdown": "2.0.2"
   },
   "version": "1.7.0"
 }

@@ -1,11 +1,8 @@
 import sitePath from './sitePath';
+import { home } from '../content';
 
 const sortBigBannerImage = () => {
-  const images = [
-    sitePath('/images/big-banner/mala.jpg'),
-    sitePath('/images/big-banner/panteao.jpg'),
-    sitePath('/images/big-banner/sao-paulo.jpg'),
-  ];
+  const images = home.bannerImages.map(sitePath);
 
   const bgUrl = images[Math.floor(Math.random()*images.length)];
   return bgUrl;

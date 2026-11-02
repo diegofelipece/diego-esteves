@@ -4,9 +4,10 @@ import styles from '../styles/components/BigBanner.module.scss';
 import sortBigBannerImage from '../utils/sortBigBannerImage';
 import Logo from './Logo';
 import sitePath from '../utils/sitePath';
+import { home } from '../content';
 
 const BigBanner = () => {
-  const [bgUrl, setBgUrl] = useState(() => sitePath('/images/big-banner/mala.jpg'));
+  const [bgUrl, setBgUrl] = useState(() => sitePath(home.bannerImages[0]));
 
   useEffect(() => {
     setBgUrl(sortBigBannerImage());

@@ -1,0 +1,23 @@
+{
+  "slug": "cbf",
+  "title": "CBF app",
+  "category": "design",
+  "coverImage": "/images/projects/cbf/cover.jpg",
+  "order": 8,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "I was responsable to redesign the app of the Brazilian Soccer Team sponsered by Vivo. The app has oficial informations about the team, like news, photos, and a game calendar.\n\nThis job was managed by  pactodigital, that invited me to make a whole new art direction for the app. It was launched for iOS and Android, both avaliable for tablets and smartphones.\n\n( ~ circa 2015/07 )"
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/cbf/selecao-app.jpeg",
+      "alt": "",
+      "width": 1000,
+      "height": 653
+    }
+  ],
+  "links": []
+}

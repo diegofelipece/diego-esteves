@@ -53,7 +53,7 @@ const ProjectDetails = ({ excerpt, expandProject, alwaysExpanded }: Props) => {
     <div className={styles.project_details} ref={elmRef} data-project-slug={excerpt.slug}>
       <div
         className={styles.project_head}
-        style={{backgroundImage: `url(${sitePath(`/images/projects/${excerpt.coverImage}`)})`}}>
+        style={{backgroundImage: `url(${sitePath(excerpt.coverImage)})`}}>
         {!expanded ? <button className={styles.project_head__expander} onClick={onExpandClick} aria-label={`View ${excerpt.title}`}>
           <div className={styles.project_head__expander__icon}>
             <span className={styles.project_head__expander__icon__a}></span>

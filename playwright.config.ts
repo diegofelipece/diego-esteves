@@ -5,6 +5,7 @@ const basePath = process.env.SITE_BASE_PATH || '';
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.ts',
+  testIgnore: '**/local/**',
   fullyParallel: true,
   workers: 2,
   reporter: 'list',

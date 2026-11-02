@@ -1,36 +1,20 @@
-import { Project, ProjectExerpt } from '../types/Project';
-import { airobot } from './airobot';
-import { cashMe } from './cash-me';
-import { gucciInteractiveVideos } from './gucci-interactive-videos';
-import { nexxus } from './nexxus';
-import { mussumIpsum } from './mussum-ipsum';
-import { cbf } from './cbf';
-import { assentamento } from './assentamento';
-import { gucciBrandExperience } from './gucci-brand-experience';
+import { createElement } from 'react';
+import { projects } from '../content';
+import ContentBlocks from '../components/ContentBlocks';
+import type { Project, ProjectExerpt } from '../types/Project';
 
-const projectsArray: Project[]  = [
-  mussumIpsum,
-  gucciInteractiveVideos,
-  gucciBrandExperience,
-  assentamento,
-  nexxus, 
-  cashMe, 
-  airobot, 
-  cbf, 
-];
+const catalog: Record<string, Project> = Object.fromEntries(projects.map((project) => [
+  project.slug,
+  {
+    excerpt: {
+      slug: project.slug, title: project.title, category: project.category,
+      coverImage: project.coverImage, description: project.description,
+    },
+    content: createElement(ContentBlocks, { blocks: project.blocks }),
+    links: project.links,
+  },
+]));
 
-const projects: {[slug: string]: Project} = projectsArray.reduce((all, project) => {
-  if (project.hidden) return all;
-  all = { ...all,
-    ...{
-      [project.excerpt.slug]: project
-    }
-  }
-  return all;
-}, {});
-
-const exerpts: ProjectExerpt[] = Object.values(projects).map(project => project.excerpt);
-
-export const loader = (slug: string): Project => projects[slug];
-
-export default exerpts;
+const excerpts: ProjectExerpt[] = Object.values(catalog).map((project) => project.excerpt);
+export const loader = (slug: string): Project | undefined => catalog[slug];
+export default excerpts;

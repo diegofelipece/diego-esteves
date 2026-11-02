@@ -7,6 +7,7 @@ import ProjectsController from '../components/ProjectsController';
 import SeoTags from '../components/SeoTags';
 import styles from '../styles/pages/Home.module.scss';
 import { loader } from '../projects/_index';
+import { home } from '../content';
 
 const Home = () => {
   const { slug } = useParams();
@@ -24,8 +25,8 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <SeoTags
-        pageDescription="Diego Esteves portfolio"
-        pageTitle={project?.excerpt.title || 'Welcome to my portfolio'}
+        pageDescription={project?.excerpt.description || home.description}
+        pageTitle={project?.excerpt.title || home.title}
         pageSlug={project ? `projects/${project.excerpt.slug}` : ''}
       />
       <main>

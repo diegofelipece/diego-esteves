@@ -17,4 +17,5 @@ export interface ProjectExerpt {
   title: string;
   category: string;
   coverImage: string;
+  description: string;
 }

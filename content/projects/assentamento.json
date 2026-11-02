@@ -1,0 +1,66 @@
+{
+  "slug": "assentamento",
+  "title": "Assentamento",
+  "category": "design and illustration",
+  "coverImage": "/images/projects/assentamento/cover.jpg",
+  "order": 4,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "My friend [Rogério Tavares](https://open.spotify.com/intl-pt/artist/5nYdFc9MmMrQcHyGPv19Mm?si=1uTKH2SWRvKshUVsht_gwQ), an amazing musician, invited me to do the graphic project for his new album, recording only [Chico Buarque](https://en.wikipedia.org/wiki/Chico_Buarque) songs, released on 2023 September.\n\nWe discussed some possible names and decided to go ahead with Assentamento (settlement), which happens to be the title of one of the songs he recorded in his voice and the one that most brought me a visual description, a scene of a huge sun lightning the semi-desertic part of Brazil (Sertão). So I worked on a watercolor illustration and proposed that first version."
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/assentamento/first-version.jpg",
+      "alt": "",
+      "width": 1920,
+      "height": 930
+    },
+    {
+      "type": "text",
+      "body": "In the end, we needed to adjust the project to fit the standards of the record label, and the Vinil version didn't happen (at least yet), but that also allowed me to expand the project for the booklet, where I could use a lot of different references.\n\nIt was amazing to jump into a graphic and illustration project after some years of massive coding.\n\n( circa 07/2023 )"
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/assentamento/lines.png",
+      "alt": "",
+      "width": 600,
+      "height": 29
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/assentamento/mockup-1.jpg",
+      "alt": "",
+      "width": 1919,
+      "height": 735
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/assentamento/flower.png",
+      "alt": "",
+      "width": 600,
+      "height": 30
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/assentamento/mockup-2.jpg",
+      "alt": "",
+      "width": 1920,
+      "height": 994
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/assentamento/end.png",
+      "alt": "",
+      "width": 300,
+      "height": 336
+    }
+  ],
+  "links": [
+    {
+      "url": "https://open.spotify.com/intl-pt/album/2Llv2GnyuQ8lGnaw9hXBBy?si=wlmmg77hTDeIIcn1_40LJw"
+    }
+  ]
+}

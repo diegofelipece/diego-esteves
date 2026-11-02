@@ -13,8 +13,10 @@ validation builds must pass before the deploy job runs.
 
 ## Local development and validation
 
-Use Node.js 22.22 or newer and install dependencies with `npm ci`.
-`npm start` starts the Vite-based development server.
+Use Node.js 24 (`nvm use`) and install dependencies with `npm ci`.
+`npm start` starts only the Vite-based public development server.
+`npm run dev` starts the public site, CMS editor, and local CMS proxy together
+with labeled logs. Ctrl+C stops all three; if one exits, the others stop too.
 
 ```sh
 npm run lint
@@ -43,9 +45,23 @@ Chromium tests cover desktop/mobile project order, expansion, progressive
 scrolling, browser history, About navigation, media loading, and project content
 with JavaScript disabled.
 
-Project prose and metadata remain in `projects/*.tsx`; this release does not
-introduce a CMS or convert the content model. The registry controls display order,
-and pre-rendered project paths come from those filenames.
+Project prose and metadata live in validated `content/projects/*.json`.
+The same published catalog determines homepage order, progressive navigation,
+and pre-rendered routes. `npm run build` validates all content and referenced
+images before exporting the site. See [content management](content-management.md)
+for the model, local editor, media, manual content PRs, and future remote login.
+
+Decap is local-only: the production build neither bundles nor exports the editor
+or its configuration. `/admin/` returns 404 on Pages. Local editing writes files
+to the working tree; review, validation, commits, and PRs remain manual.
+No OAuth host, SSO, credentials, or `CMS_OAUTH_URL` variable is required or wired
+into the current build. Remote login is documented only as a future option.
+
+CI also runs `npm run test:cms` before the final build in both base-path modes.
+This starts loopback-only local editing services, creates a temporary project and
+uploaded image, checks the preview, and proves that publication/withdrawal
+changes the generated HTML without application-code edits. Fixtures are removed,
+and the final build recreates the deployable artifact from real content.
 
 ## GitHub Pages path
 

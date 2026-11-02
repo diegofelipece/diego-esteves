@@ -1,0 +1,30 @@
+{
+  "slug": "gucci-interactive-videos",
+  "title": "Gucci Interactive Videos",
+  "category": "web development and design",
+  "coverImage": "/images/projects/gucci-interactive-videos/cover.jpg",
+  "order": 2,
+  "published": true,
+  "description": "Diego Esteves portfolio",
+  "blocks": [
+    {
+      "type": "text",
+      "body": "I was responsible for designing, coding, and coordinating the creation of a small interactive video platform for Gucci. It is a stand-alone micro front-end piece, thought to be integrated into other brand projects, consisting of two sides: the first is a dashboard for video tagging and upload and the other is a responsive interactive video player that shows the products visible on the video as they appear.\n\nThe idea came from Gucci Project Manager while I was the team leader of a 4 developers squad, working at Euris. We worked with PHP/Lumen/MariaDb for the back end and Angular on the front end.\n\n( ~ circa 2022/06 )"
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/gucci-interactive-videos/web.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 1148
+    },
+    {
+      "type": "image",
+      "src": "/images/projects/gucci-interactive-videos/web-2.jpg",
+      "alt": "",
+      "width": 1760,
+      "height": 984
+    }
+  ],
+  "links": []
+}

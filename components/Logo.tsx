@@ -1,5 +1,6 @@
 import styles from '../styles/components/Logo.module.scss';
 import { motion } from "framer-motion"
+import { home } from '../content';
 
 type Props = {
   className?: string;
@@ -21,8 +22,8 @@ const Logo = ({ size = 'large', className, returnToHome}: Props) => {
       transition={{ duration: 0.4 }}      
       className={`${styles.logo} ${styles[`--${size}`]} ${className || ''}`}>
       {returnToHome ? <button className={styles.logo__clickable} aria-label="Return to portfolio" onClick={() => returnToHome()} /> : null}
-      <h1 className={styles.logo__title}>Diego<br />Esteves</h1>
-      {size === 'large'? <p className={styles.logo__subtitle}>designer and developer</p> : null}
+      <h1 className={styles.logo__title}>{home.logoTitle.split('\n').map((line, index) => <span key={index}>{index ? <br /> : null}{line}</span>)}</h1>
+      {size === 'large'? <p className={styles.logo__subtitle}>{home.tagline}</p> : null}
     </motion.div>
   );
 };
