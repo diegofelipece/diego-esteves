@@ -1,1 +1,7 @@
-export const calculateAge = () => Math.floor((new Date().getTime() - new Date(1990, 6, 26).getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+export const calculateAge = () => {
+  const now = new Date();
+  const birthday = new Date(Date.UTC(1990, 6, 26));
+  const beforeBirthday = now.getUTCMonth() < birthday.getUTCMonth()
+    || (now.getUTCMonth() === birthday.getUTCMonth() && now.getUTCDate() < birthday.getUTCDate());
+  return now.getUTCFullYear() - birthday.getUTCFullYear() - (beforeBirthday ? 1 : 0);
+};

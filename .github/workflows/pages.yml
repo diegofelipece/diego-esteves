@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - master
+  schedule:
+    - cron: '17 4 26 7 *'
 
 permissions:
   contents: read
@@ -65,21 +67,21 @@ jobs:
         run: npm run test:e2e
 
       - name: Set custom domain
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink'
+        if: (github.event_name == 'push' || github.event_name == 'schedule') && github.ref == 'refs/heads/master' && matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink'
         run: echo 'diegoesteves.ink' > out/CNAME
 
       - name: Configure GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && ((matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink') || (matrix.path == 'repository' && vars.PAGES_CUSTOM_DOMAIN != 'diegoesteves.ink'))
+        if: (github.event_name == 'push' || github.event_name == 'schedule') && github.ref == 'refs/heads/master' && ((matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink') || (matrix.path == 'repository' && vars.PAGES_CUSTOM_DOMAIN != 'diegoesteves.ink'))
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && ((matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink') || (matrix.path == 'repository' && vars.PAGES_CUSTOM_DOMAIN != 'diegoesteves.ink'))
+        if: (github.event_name == 'push' || github.event_name == 'schedule') && github.ref == 'refs/heads/master' && ((matrix.path == 'root' && vars.PAGES_CUSTOM_DOMAIN == 'diegoesteves.ink') || (matrix.path == 'repository' && vars.PAGES_CUSTOM_DOMAIN != 'diegoesteves.ink'))
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: (github.event_name == 'push' || github.event_name == 'schedule') && github.ref == 'refs/heads/master'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

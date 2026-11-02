@@ -7,9 +7,18 @@ in `out/`, including directory-index HTML, route data, root `404.html`, and
 `.nojekyll`. It does not depend on SPA rewrites or an Apache configuration.
 
 `.github/workflows/pages.yml` validates root and repository-prefix builds on pull
-requests to `master`, without publishing either. Only pushes to `master` deploy,
+requests to `master`, without publishing either. Pushes to `master` and the annual
+scheduled run deploy,
 and only the artifact matching the custom-domain setting is uploaded. Both
 validation builds must pass before the deploy job runs.
+
+An annual cron (`17 4 26 7 *`) rebuilds the default branch on July 26 at 04:17 UTC
+to refresh the age in pre-rendered HTML. Age uses UTC calendar dates, not an
+average year length. Scheduled runs execute the same checks and deployment gates
+as pushes; they do not merge PRs, create tags, or publish GitHub Releases.
+GitHub schedules can be delayed and public-repository schedules are disabled
+after 60 days without repository activity. Keep the workflow enabled in Actions;
+this is a best-effort refresh, not a guaranteed exact-time birthday update.
 
 ## Local development and validation
 
