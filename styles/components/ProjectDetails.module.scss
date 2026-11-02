@@ -19,6 +19,8 @@
   background-position: center;
 
   &__expander {
+    border: 0;
+    background: transparent;
     position: absolute;
     cursor: pointer;
     top: 0;

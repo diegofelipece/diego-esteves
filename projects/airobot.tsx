@@ -1,6 +1,5 @@
 import GenericBlock from "../components/GenericBlock";
 import ImageBlock from "../components/ImageBlock";
-import SeoTags from "../components/SeoTags";
 import { Project, ProjectExerpt } from "../types/Project";
 
 export const excerpt: ProjectExerpt = {
@@ -14,7 +13,6 @@ export const airobot: Project = {
   excerpt,
   content: (
     <>
-      <SeoTags pageDescription="Diego Esteves porttfolio" pageTitle={excerpt.title} pageSlug={excerpt.slug} />
       <GenericBlock>
         <p>A travel business software company.</p>
         <p>Colaborated as front-end developer of the project, delivering a static site, based on the recieved layout. The animations are all HTML + jQuery.</p>

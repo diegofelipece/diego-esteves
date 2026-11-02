@@ -1,6 +1,5 @@
 import GenericBlock from "../components/GenericBlock";
 import ImageBlock from "../components/ImageBlock";
-import SeoTags from "../components/SeoTags";
 import { Project, ProjectExerpt } from "../types/Project";
 
 export const excerpt: ProjectExerpt = {
@@ -14,7 +13,6 @@ export const mussumIpsum: Project = {
   excerpt,
   content: (
     <>
-      <SeoTags pageDescription="Diego Esteves portfolio" pageTitle={excerpt.title} pageSlug={excerpt.slug} />
       <GenericBlock>
         <p>
           In 2012 I had the idea of creating a custom "lorem ipsum" generator based on a classic Brazilian TV character called Mussum, so I designed a two-page website and put it online in a week. On the second day, the project went viral through Brazilian designers and developers and reached an unexpected 36.294 pageviews, during the first 5 days. As I write this on 2023 October, the term "mussum ipsum" reached more than +15,000 results on Google Search and it's present on more than +3,000 code files on Github.

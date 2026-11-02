@@ -1,4 +1,4 @@
-import { Block } from "./Block";
+import type { ReactNode } from "react";
 
 export interface ProjectLink {
   url: string;
@@ -7,7 +7,7 @@ export interface ProjectLink {
 
 export interface Project {
   excerpt: ProjectExerpt;
-  content?: JSX.Element;
+  content?: ReactNode;
   links?: (ProjectLink|string)[];
   hidden?: boolean;
 }

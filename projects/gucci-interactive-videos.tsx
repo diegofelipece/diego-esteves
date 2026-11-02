@@ -1,6 +1,5 @@
 import GenericBlock from "../components/GenericBlock";
 import ImageBlock from "../components/ImageBlock";
-import SeoTags from "../components/SeoTags";
 import { Project, ProjectExerpt } from "../types/Project";
 
 export const excerpt: ProjectExerpt = {
@@ -14,7 +13,6 @@ export const gucciInteractiveVideos: Project = {
   excerpt,
   content: (
     <>
-      <SeoTags pageDescription="Diego Esteves portfolio" pageTitle={excerpt.title} pageSlug={excerpt.slug} />
       <GenericBlock>
         <p>
           I was responsible for designing, coding, and coordinating the creation of a small interactive video platform for Gucci. It is a stand-alone micro front-end piece, thought to be integrated into other brand projects, consisting of two sides: the first is a dashboard for video tagging and upload and the other is a responsive interactive video player that shows the products visible on the video as they appear.

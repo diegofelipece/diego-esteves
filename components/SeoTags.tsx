@@ -1,19 +1,18 @@
-import Head from "next/head";
-
 type Props = {
   pageTitle: string,
   pageDescription: string,
   pageSlug?: string,
+  noIndex?: boolean,
 }
 
-const SeoTags = ({ pageTitle, pageDescription, pageSlug = '' }: Props) => {
+const SeoTags = ({ pageTitle, pageDescription, pageSlug = '', noIndex = false }: Props) => {
   const siteName = 'Diego Esteves';
   const title = pageTitle ? `${pageTitle} – ${siteName}` : siteName;
 
   const prodUrl = 'https://diegoesteves.ink';
-  const canonical = `${prodUrl}/${pageSlug}`;
+  const canonical = `${prodUrl}/${pageSlug.replace(/^\/|\/$/g, '')}${pageSlug ? '/' : ''}`;
 
-  return (<Head>
+  return (<>
     <title>{title}</title>
 
     <meta property="og:locale" content="en_EN" />
@@ -34,8 +33,8 @@ const SeoTags = ({ pageTitle, pageDescription, pageSlug = '' }: Props) => {
     <meta property="og:url" content={canonical} />
     <link rel="canonical" href={canonical} />
 
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  </Head>);
+    <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+  </>);
 }
 
 export default SeoTags;

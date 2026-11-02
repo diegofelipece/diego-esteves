@@ -1,7 +1,7 @@
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const sitePath = (path: string) => {
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const normalizedPath = `/${path.split('/').filter(Boolean).join('/')}${path.endsWith('/') && path !== '/' ? '/' : ''}`;
   return `${basePath}${normalizedPath}`;
 };
 

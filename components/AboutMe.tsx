@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import styles from '../styles/components/AboutMe.module.scss';
 import Button from './Button';
 import { motion, useAnimation } from "framer-motion"
@@ -9,18 +9,20 @@ import sitePath from '../utils/sitePath';
 const AboutMe = () => {
   const controls = useAnimation();
 
-  controls.start({
-    width: "0%",
-    transition: { duration: 0 },
-  })  
+  useEffect(() => {
+    controls.start({
+      width: "0%",
+      transition: { duration: 0 },
+    });
+  }, [controls]);
 
-  const router = useRouter();
+  const navigate = useNavigate();
   const clickOnAbout = () => {
     controls.start({
       width: "100%",
       transition: { duration: 0.6 },
     }).then(() => {
-      router.push('/about');
+      navigate('/about/');
     })  
   };
 
@@ -33,9 +35,8 @@ const AboutMe = () => {
         className={styles.about_me__layover}></motion.span>
       <div className={styles.about_me__inner}>
         <div className={styles.about_me__inner__image}>
-          <Image
-            loader={({src}) => sitePath(`/images/${src}`)}
-            src="diego.jpg"
+          <img
+            src={sitePath('/images/diego.jpg')}
             alt="Diego Esteves"
             width={238}
             height={238}

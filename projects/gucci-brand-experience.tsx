@@ -1,6 +1,5 @@
 import GenericBlock from "../components/GenericBlock";
 import ImageBlock from "../components/ImageBlock";
-import SeoTags from "../components/SeoTags";
 import { Project, ProjectExerpt } from "../types/Project";
 
 export const excerpt: ProjectExerpt = {
@@ -14,7 +13,6 @@ export const gucciBrandExperience: Project = {
   excerpt,
   content: (
     <>
-      <SeoTags pageDescription="Diego Esteves portfolio" pageTitle={excerpt.title} pageSlug={excerpt.slug} />
       <GenericBlock>
         <p>
           Besides many features and regular maintenance, I had the mission of renovating some views of the project, reviewing UI and them implementing it. It is a web project and a sort of catalog, used during some special events to show exclusive products for selected clients.
