@@ -1,8 +1,9 @@
-import { isRouteErrorResponse, Links, Outlet, Scripts, useRouteError } from 'react-router';
+import { isRouteErrorResponse, Links, Outlet, Scripts, useLoaderData, useRouteError } from 'react-router';
 import type { ReactNode } from 'react';
 import Footer from '../components/Footer';
 import SeoTags from '../components/SeoTags';
 import sitePath from '../utils/sitePath';
+import { ProfileDateProvider } from '../components/ProfileDate';
 import '../styles/globals.scss';
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -12,6 +13,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={sitePath('/favicon.ico')} />
+        <link rel="alternate" type="application/json" title="Professional profile" href={sitePath('/diego-esteves.json')} />
         <Links />
       </head>
       <body>
@@ -24,7 +26,12 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const { renderedAt } = useLoaderData<typeof loader>();
+  return <ProfileDateProvider renderedAt={renderedAt}><Outlet /></ProfileDateProvider>;
+}
+
+export function loader() {
+  return { renderedAt: new Date().toISOString() };
 }
 
 export function ErrorBoundary() {

@@ -1,7 +1,8 @@
 import CMS from 'decap-cms-app';
 import type { CmsConfig, PreviewTemplateComponentProps } from 'decap-cms-core';
 import type { ContentBlock } from '../content/schema';
-import ContentBlocks, { interpolateContent } from '../components/ContentBlocks';
+import ContentBlocks from '../components/ContentBlocks';
+import { interpolateContent, ProfileDateProvider, useProfileDate } from '../components/ProfileDate';
 import previewStyles from '../styles/globals.scss?inline';
 import blockStyles from '../styles/components/GenericBlock.module.scss?inline';
 import imageStyles from '../styles/components/ImageBlock.module.scss?inline';
@@ -17,7 +18,8 @@ async function initialize() {
   if (!config.local_backend) throw new Error('The local editing backend is required.');
   const siteBase = import.meta.env.BASE_URL.replace(/\/admin\/$/, '');
   CMS.registerPreviewStyle([previewStyles, blockStyles, imageStyles].join('\n').replaceAll('/fonts/', `${siteBase}/fonts/`), { raw: true });
-  const preview = ({ entry, getAsset }: PreviewTemplateComponentProps) => {
+  const Preview = ({ entry, getAsset }: PreviewTemplateComponentProps) => {
+    const info = useProfileDate();
     const data = entry.get('data').toJS() as Record<string, unknown>;
     const blocks = (data.blocks || []) as ContentBlock[];
     const resolveImage = (path: string) => {
@@ -33,15 +35,18 @@ async function initialize() {
         {about ? <>
           <h2>{about.heading}</h2>
           {about.image ? <img src={resolveImage(about.image)} alt={about.imageAlt || ''} style={{ maxWidth: '100%' }} /> : null}
-          <p>{interpolateContent(about.text || '')}</p>
+          <p>{interpolateContent(about.text || '', info)}</p>
           <p>{about.buttonLabel}</p>
         </> : null}
+        {data.basics ? <pre style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(data, null, 2)}</pre> : null}
       </article>
     );
   };
+  const preview = (props: PreviewTemplateComponentProps) => <ProfileDateProvider><Preview {...props} /></ProfileDateProvider>;
   CMS.registerPreviewTemplate('projects', preview);
   CMS.registerPreviewTemplate('about', preview);
   CMS.registerPreviewTemplate('home', preview);
+  CMS.registerPreviewTemplate('profile', preview);
   status.remove();
   CMS.init({ config });
 }

@@ -5,7 +5,7 @@ const imageField = (name: string, label: string) => ({
 const markdownField = (name: string, label: string) => ({
   name, label, widget: 'markdown', buttons: ['bold', 'italic', 'link', 'bulleted-list', 'numbered-list'],
   editor_components: [],
-  hint: 'Use {{age}} for the calculated age. Raw HTML and inline images are not supported.',
+  hint: 'Use {{age}} for age and {{birthday}} after "years old" for the birthday suffix. Raw HTML and inline images are not supported.',
 });
 const blockField = {
   name: 'blocks', label: 'Content blocks', widget: 'list', min: 1,
@@ -53,6 +53,49 @@ export function cmsConfig({ basePath = '' } = {}) {
     slug: { encoding: 'ascii', clean_accents: true },
     collections: [
       {
+        name: 'profile', label: 'Professional profile', publish: false, delete: false,
+        files: [{
+          name: 'profile', label: 'Professional profile', file: 'content/profile/diego-esteves.json', format: 'json',
+          fields: [
+            {
+              name: 'basics', label: 'Basics (public)', widget: 'object',
+              fields: [
+                stringField('name', 'Name'), stringField('label', 'Professional label'),
+                { name: 'summary', label: 'Summary', widget: 'text' },
+                { ...stringField('birthDate', 'Birth date'), pattern: ['^\\d{4}-\\d{2}-\\d{2}$', 'Use YYYY-MM-DD.'], hint: 'Publicly exported. This is the single source for the calculated age.' },
+                stringField('url', 'Website'),
+                { name: 'profiles', label: 'Public profiles', widget: 'list', fields: [stringField('network', 'Network'), stringField('url', 'URL')] },
+              ],
+            },
+            {
+              name: 'work', label: 'Experience', widget: 'list', required: false, default: [],
+              fields: [
+                stringField('name', 'Organization'),
+                ...['position', 'startDate', 'endDate', 'summary'].map((name) => ({ ...stringField(name, name), required: false })),
+              ],
+            },
+            {
+              name: 'education', label: 'Education', widget: 'list', required: false, default: [],
+              fields: [
+                stringField('institution', 'Institution'),
+                ...['area', 'studyType', 'startDate', 'endDate'].map((name) => ({ ...stringField(name, name), required: false })),
+              ],
+            },
+            {
+              name: 'skills', label: 'Skills', widget: 'list', required: false, default: [],
+              fields: [stringField('name', 'Skill'), { name: 'keywords', label: 'Keywords', widget: 'list' }],
+            },
+            {
+              name: 'projects', label: 'Profile projects', widget: 'list', required: false, default: [],
+              fields: [
+                stringField('name', 'Project'),
+                ...['startDate', 'url', 'description'].map((name) => ({ ...stringField(name, name), required: false })),
+              ],
+            },
+          ],
+        }],
+      },
+      {
         name: 'projects', label: 'Projects', label_singular: 'Project',
         folder: 'content/projects', extension: 'json', format: 'json',
         create: true, delete: false, publish: false,
@@ -99,7 +142,7 @@ export function cmsConfig({ basePath = '' } = {}) {
               name: 'about', label: 'About excerpt', widget: 'object',
               fields: [
                 stringField('heading', 'Heading'),
-                { name: 'text', label: 'Excerpt', widget: 'text', hint: 'Use {{age}} for the calculated age.' },
+                { name: 'text', label: 'Excerpt', widget: 'text', hint: 'Use {{age}} for age and {{birthday}} after "years old" for the birthday suffix.' },
                 imageField('image', 'Portrait'), { ...stringField('imageAlt', 'Portrait alternative text'), required: false, default: '' },
                 stringField('buttonLabel', 'About button label'),
               ],

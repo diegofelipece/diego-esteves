@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { test } from 'node:test';
-import { blockSchema, projectSchema, publishedProjects } from '../content/schema.ts';
+import { blockSchema, profileSchema, projectSchema, publishedProjects } from '../content/schema.ts';
 import { readContent } from '../content/read.ts';
 import { cmsConfig } from '../admin/config.ts';
 
@@ -59,4 +59,14 @@ test('CMS requires local editing and leaves deployment to reviewed PRs', () => {
   assert.ok(!('base_url' in config.backend));
   assert.ok(config.collections.every((collection) => collection.publish === false));
   assert.equal(config.public_folder, '/images/uploads');
+});
+
+test('public profile validation rejects impossible dates and unplanned personal fields', () => {
+  const profile = readContent().profile;
+  for (const birthDate of ['2040-02-30', '2041-02-29', '2040-13-01', '2040-00-26', '26/07/2040']) {
+    assert.equal(profileSchema.safeParse({ ...profile, basics: { ...profile.basics, birthDate } }).success, false, birthDate);
+  }
+  assert.ok(profileSchema.safeParse({ ...profile, basics: { ...profile.basics, birthDate: '2040-02-29' } }).success);
+  assert.equal(profileSchema.safeParse({ ...profile, basics: { ...profile.basics, phone: 'unplanned' } }).success, false);
+  assert.ok(blockSchema.safeParse({ type: 'text', body: 'I am {{age}} years old{{birthday}}.' }).success);
 });

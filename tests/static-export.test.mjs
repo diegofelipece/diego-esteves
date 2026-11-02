@@ -64,6 +64,19 @@ test('a rewrite-free static server serves direct routes and a true 404 response'
   assert.match(await missing.text(), /Page not found/);
   assert.equal(await readFile(new URL('.nojekyll', output), 'utf8'), '');
   assert.match(await readFile(new URL('404.html', output), 'utf8'), /noindex, nofollow/);
+  const profile = await fetch(`${origin}/diego-esteves.json`);
+  assert.equal(profile.status, 200);
+  assert.match(profile.headers.get('content-type'), /application\/json/);
+  assert.deepEqual(await profile.json(), JSON.parse(await readFile(new URL('../content/profile/diego-esteves.json', import.meta.url), 'utf8')));
+});
+
+test('static HTML advertises the profile and never leaves a stale birthday suffix', async () => {
+  for (const path of ['index.html', 'about/index.html']) {
+    const html = await readFile(new URL(path, output), 'utf8');
+    assert.ok(html.includes(`type="application/json" title="Professional profile" href="${basePath}/diego-esteves.json"`));
+    assert.ok(!html.includes('(today'));
+    assert.match(html, /\d+(?:<!-- -->)? years old/);
+  }
 });
 
 test('invalid export prefixes are rejected before existing output is changed', async () => {
